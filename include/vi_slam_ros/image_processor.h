@@ -1,10 +1,3 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
-
 #ifndef GTSAM_VIO_IMAGE_PROCESSOR_H
 #define GTSAM_VIO_IMAGE_PROCESSOR_H
 
@@ -22,7 +15,7 @@
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 
-namespace gtsam_vio {
+namespace vi_slam {
 
 /*
  * @brief ImageProcessor Detects and tracks features
@@ -393,6 +386,6 @@ private:
 typedef ImageProcessor::Ptr ImageProcessorPtr;
 typedef ImageProcessor::ConstPtr ImageProcessorConstPtr;
 
-} // end namespace gtsam_vio
+}
 
 #endif

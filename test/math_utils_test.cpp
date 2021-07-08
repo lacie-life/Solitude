@@ -1,18 +1,11 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
-
 #include <iostream>
 #include <Eigen/Dense>
 #include <gtest/gtest.h>
-#include <gtsam_vio/math_utils.hpp>
+#include <vi_slam_ros/math_utils.hpp>
 
 using namespace std;
 using namespace Eigen;
-using namespace gtsam_vio;
+using namespace vi_slam;
 
 TEST(MathUtilsTest, skewSymmetric) {
   Vector3d w(1.0, 2.0, 3.0);

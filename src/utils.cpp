@@ -1,14 +1,7 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
-
-#include <gtsam_vio/utils.h>
+#include <vi_slam_ros/utils.h>
 #include <vector>
 
-namespace gtsam_vio {
+namespace vi_slam {
 namespace utils {
 
 Eigen::Isometry3d getTransformEigen(const ros::NodeHandle &nh,
@@ -89,4 +82,4 @@ cv::Mat getKalibrStyleTransform(const ros::NodeHandle &nh,
 }
 
 } // namespace utils
-} // namespace gtsam_vio
+} 

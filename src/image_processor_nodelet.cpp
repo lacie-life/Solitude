@@ -1,13 +1,6 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
+#include <vi_slam_ros/image_processor_nodelet.h>
 
-#include <gtsam_vio/image_processor_nodelet.h>
-
-namespace gtsam_vio {
+namespace vi_slam {
 void ImageProcessorNodelet::onInit() {
   img_processor_ptr.reset(new ImageProcessor(getPrivateNodeHandle()));
   if (!img_processor_ptr->initialize()) {

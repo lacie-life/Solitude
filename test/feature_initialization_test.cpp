@@ -1,9 +1,3 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
 
 #include <iostream>
 #include <vector>
@@ -16,13 +10,13 @@
 #include <gtest/gtest.h>
 #include <random_numbers/random_numbers.h>
 
-#include <gtsam_vio/cam_state.h>
-#include <gtsam_vio/feature.hpp>
+#include <vi_slam_ros/cam_state.h>
+#include <vi_slam_ros/feature.hpp>
 
 
 using namespace std;
 using namespace Eigen;
-using namespace gtsam_vio;
+using namespace vi_slam;
 
 // Static member variables in CAMState class
 Isometry3d CAMState::T_cam0_cam1 = Isometry3d::Identity();

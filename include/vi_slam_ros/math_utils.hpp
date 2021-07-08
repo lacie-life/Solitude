@@ -1,17 +1,10 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
-
 #ifndef GTSAM_VIO_MATH_UTILS_HPP
 #define GTSAM_VIO_MATH_UTILS_HPP
 
 #include <cmath>
 #include <Eigen/Dense>
 
-namespace gtsam_vio {
+namespace vi_slam {
 
 /*
  *  @brief Create a skew-symmetric matrix from a 3-element vector.
@@ -158,6 +151,6 @@ inline Eigen::Vector4d rotationToQuaternion(
   return q;
 }
 
-} // end namespace gtsam_vio
+} 
 
 #endif // GTSAM_VIO_MATH_UTILS_HPP

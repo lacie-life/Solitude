@@ -1,10 +1,3 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
-
 #include <iostream>
 #include <algorithm>
 #include <set>
@@ -13,16 +6,16 @@
 #include <sensor_msgs/image_encodings.h>
 #include <random_numbers/random_numbers.h>
 
-#include <gtsam_vio/CameraMeasurement.h>
-#include <gtsam_vio/TrackingInfo.h>
-#include <gtsam_vio/image_processor.h>
-#include <gtsam_vio/utils.h>
+#include <vi_slam_ros/CameraMeasurement.h>
+#include <vi_slam_ros/TrackingInfo.h>
+#include <vi_slam_ros/image_processor.h>
+#include <vi_slam_ros/utils.h>
 
 using namespace std;
 using namespace cv;
 using namespace Eigen;
 
-namespace gtsam_vio {
+namespace vi_slam {
 ImageProcessor::ImageProcessor(ros::NodeHandle& n) :
   nh(n),
   is_first_img(true),
@@ -1486,4 +1479,4 @@ void ImageProcessor::featureLifetimeStatistics() {
   return;
 }
 
-} // end namespace gtsam_vio
+} 

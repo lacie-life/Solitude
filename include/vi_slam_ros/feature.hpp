@@ -1,9 +1,3 @@
-/*
- * COPYRIGHT AND PERMISSION NOTICE
- * Penn Software MSCKF_VIO
- * Copyright (C) 2017 The Trustees of the University of Pennsylvania
- * All rights reserved.
- */
 
 #ifndef GTSAM_VIO_FEATURE_H
 #define GTSAM_VIO_FEATURE_H
@@ -20,7 +14,7 @@
 #include "imu_state.h"
 #include "cam_state.h"
 
-namespace gtsam_vio {
+namespace vi_slam {
 
 /*
  * @brief Feature Salient part of an image. Please refer
@@ -435,6 +429,6 @@ bool Feature::initializePosition(
 
   return is_valid_solution;
 }
-} // namespace gtsam_vio
+}
 
 #endif // GTSAM_VIO_FEATURE_H

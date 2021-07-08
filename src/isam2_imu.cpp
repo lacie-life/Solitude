@@ -13,7 +13,7 @@
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_broadcaster.h>
 #include <tf_conversions/tf_eigen.h> 
-#include <gtsam_vio/CameraMeasurement.h>
+#include <vi_slam_ros/CameraMeasurement.h>
 
 #include <sensor_msgs/PointCloud2.h>
 #include <pcl_ros/point_cloud.h>
@@ -61,7 +61,7 @@
 
 using namespace std;
 using namespace message_filters;
-using namespace gtsam_vio;
+using namespace vi_slam;
 using namespace sensor_msgs;
 using namespace gtsam;
 
