@@ -1,159 +1,102 @@
-set(isam2_node "isam2_vio_zedpose")
+cmake_minimum_required(VERSION 2.8.11)
 
-cmake_minimum_required(VERSION 2.8.12)
-project(vi_slam_ros)
-
-add_compile_options(-std=c++11)
-
-# Modify cmake module path if new .cmake files are required
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake")
-
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  std_msgs
-  tf
-  nav_msgs
-  sensor_msgs
-  geometry_msgs
-  eigen_conversions
-  tf_conversions
-  random_numbers
-  message_generation
-  nodelet
-  image_transport
-  cv_bridge
-  message_filters
-  pcl_conversions
-  pcl_ros
-  std_srvs
-)
-
-## GTSAM stuff
-find_package(GTSAMCMakeTools)
-find_package(GTSAM REQUIRED)
-include_directories(${GTSAM_INCLUDE_DIR})
-
-## System dependencies are found with CMake's conventions
-find_package(Boost REQUIRED)
-find_package(Eigen3 REQUIRED)
-find_package(OpenCV REQUIRED)
-find_package(SuiteSparse REQUIRED)
-
-##################
-## ROS messages ##
-##################
-add_message_files(
-  FILES
-  FeatureMeasurement.msg
-  CameraMeasurement.msg
-  TrackingInfo.msg
-)
-
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
-
-###################################
-## catkin specific configuration ##
-###################################
-catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES image_processor
-  CATKIN_DEPENDS
-    roscpp std_msgs tf nav_msgs sensor_msgs geometry_msgs nav_msgs
-    eigen_conversions tf_conversions random_numbers message_runtime
-    image_transport cv_bridge message_filters pcl_conversions
-    pcl_ros std_srvs
-  DEPENDS Boost EIGEN3 OpenCV SUITESPARSE
-)
-
-###########
-## Build ##
-###########
-
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-  ${EIGEN3_INCLUDE_DIR}
-  ${Boost_INCLUDE_DIR}
-  ${OpenCV_INCLUDE_DIRS}
-  ${SUITESPARSE_INCLUDE_DIRS}
-)
-
-# Image processor
-add_library(image_processor
-  src/image_processor.cpp
-  src/utils.cpp
-)
-add_dependencies(image_processor
-  ${${PROJECT_NAME}_EXPORTED_TARGETS}
-  ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(image_processor
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-)
-
-# Image processor nodelet
-add_library(image_processor_nodelet
-  src/image_processor_nodelet.cpp
-)
-add_dependencies(image_processor_nodelet
-  ${${PROJECT_NAME}_EXPORTED_TARGETS}
-  ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(image_processor_nodelet
-  image_processor
-  ${catkin_LIBRARIES}
-)
-
-# custom ISAM2 nodes
-
-# ISAM2 combined vision and zed pose node
-add_executable(isam2 src/${isam2_node}.cpp)
-target_link_libraries(isam2 ${catkin_LIBRARIES} gtsam)
-add_dependencies(isam2 gtsam_vio_generate_messages_cpp)
-
-#############
-## Install ##
-#############
-
-install(TARGETS
-  image_processor image_processor_nodelet
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  PATTERN "*_nodelet.h" EXCLUDE
-)
-
-install(FILES nodelets.xml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-#############
-## Testing ##
-#############
-
-if(CATKIN_ENABLE_TESTING)
-  # Feature initialization test
-  catkin_add_gtest(test_feature_init
-    test/feature_initialization_test.cpp
-  )
-  add_dependencies(test_feature_init
-    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-    ${catkin_EXPORTED_TARGETS}
-  )
-  target_link_libraries(test_feature_init
-    ${catkin_LIBRARIES}
-  )
-
-  # Math utils test
-  catkin_add_gtest(test_math_utils
-    test/math_utils_test.cpp
-  )
+# Cross Compile
+if ("$ENV{CROSS_COMPILE_FLAG}" STREQUAL "XU4")
+  message("Cross Compile For XU4")
+  SET(CMAKE_SYSTEM_NAME Linux)
+  SET(CMAKE_SYSTEM_PROCESSOR armv7l)
+  SET(CMAKE_C_COMPILER /usr/bin/arm-linux-gnueabihf-gcc)
+  SET(CMAKE_CXX_COMPILER /usr/bin/arm-linux-gnueabihf-g++)
+  SET(CMAKE_BUILD_TYPE Release)
 endif()
+
+# If on OSX, force cmake to use gcc-6/5 instead of the built-in gcc (AppleClang)
+# The compiler overriden has to happen before calling "project"
+if (APPLE)
+  if (EXISTS /usr/local/bin/g++-6)
+    message("Override CXX compiler to /usr/local/bin/g++-6!")
+    set(CMAKE_C_COMPILER   /usr/local/bin/gcc-6)
+    set(CMAKE_CXX_COMPILER /usr/local/bin/g++-6)
+  elseif (EXISTS /usr/local/bin/g++-5)
+    message("Override CXX compiler to /usr/local/bin/g++-5!")
+    set(CMAKE_C_COMPILER   /usr/local/bin/gcc-5)
+    set(CMAKE_CXX_COMPILER /usr/local/bin/g++-5)
+  elseif (EXISTS /usr/local/bin/g++-7)
+    message("Override CXX compiler to /usr/local/bin/g++-7!")
+    set(CMAKE_C_COMPILER   /usr/local/bin/gcc-7)
+    set(CMAKE_CXX_COMPILER /usr/local/bin/g++-7)
+  else ()
+    message(FATAL_ERROR "Cannot find GNU gcc on Mac!")
+  endif()
+  set(CMAKE_MACOSX_RPATH 0)
+endif()
+
+project(ICE_BA)
+
+# Configure cxx flags
+if(CYGWIN)
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -msse2 -Wno-unused-result")
+else()
+# NEON or SSE
+if((CMAKE_SYSTEM_PROCESSOR MATCHES "^arm"))
+  set(CMAKE_CXX_FLAGS "-D__ARM_NEON__ -DENABLE_NEON -mfloat-abi=hard -mfpu=neon -Ofast -std=c++11 -Wno-unused-result")
+  message("Enabling neon for armv7 " ${CMAKE_CXX_FLAGS})
+elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^aarch64")
+  set(CMAKE_CXX_FLAGS "-D__ARM_NEON__ -DENABLE_NEON -Ofast -std=c++11 -Wno-unused-result")
+  message("Detected armv8 " ${CMAKE_CXX_FLAGS})
+else()
+ # SSE4.1 seems to be not supported by GCC 4.8.4
+ # TODO(mingyu): See if we still need sse4.1
+ message(STATUS "Enable SSE2 and SSE4.1")
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -msse2 -msse4.1 -Wno-unused-result")
+ # Export compile_commands.json
+ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+endif()
+endif()
+
+# Suppress warnings for deprecated declarations for GCC 5 and above
+if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0)
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+endif()
+
+# Debug / Release / RelWithDebInfo
+set(CMAKE_BUILD_TYPE "Release")
+#-DEIGEN_USE_MKL_ALL")
+# Thirdparty dependencies
+# If CFG_VIEW is turned on, need to install glut (freeglut3-dev) and glew (libglew-dev)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
+
+find_package(CVD)
+find_package(Boost COMPONENTS thread system filesystem REQUIRED)
+find_package(Eigen REQUIRED)
+if (CVD_FOUND)
+ add_definitions(-DIBA_WITH_CVD)
+ find_package(OpenGL REQUIRED)
+ find_package(GLUT REQUIRED)
+ find_package(GLEW REQUIRED)
+ if (UNIX)
+  find_package(X11 REQUIRED)
+ endif()
+endif()
+
+
+
+# =========================
+# Frontend
+# =========================
+add_subdirectory(Frontend)
+
+# =========================
+# Backend
+# =========================
+add_subdirectory(Backend)
+
+# =========================
+# App
+# =========================
+add_subdirectory(App)
+
+# =========================
+# Loopclosure
+# =========================
+add_subdirectory(Loopclosure)
