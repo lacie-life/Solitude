@@ -1,0 +1,33 @@
+/home/jun/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5457.51/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/jun/Github/Master-Thesis/Code/SemanticSLAM
+-- The C compiler identification is GNU 9.3.0
+-- The CXX compiler identification is GNU 9.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found OpenCV: /usr/local (found version "3.4.16") 
+CMake Error at CMakeLists.txt:28 (find_package):
+  By not providing "FindGTSAM.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "GTSAM", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "GTSAM" with any of
+  the following names:
+
+    GTSAMConfig.cmake
+    gtsam-config.cmake
+
+  Add the installation prefix of "GTSAM" to CMAKE_PREFIX_PATH or set
+  "GTSAM_DIR" to a directory containing one of the above files.  If "GTSAM"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/jun/Github/Master-Thesis/Code/SemanticSLAM/cmake-build-debug/CMakeFiles/CMakeOutput.log".
