@@ -1,0 +1,174 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						6
+					]
+				},
+				{
+					"build" : "examples",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"jsonFile" : "directory-examples-Debug-1c8b83b621b6ef38a245.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "examples"
+				},
+				{
+					"build" : "examples/run_test",
+					"jsonFile" : "directory-examples.run_test-Debug-c65c74171ef75358f50b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "examples/run_test",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "examples/yolo_test",
+					"jsonFile" : "directory-examples.yolo_test-Debug-712dff8eb746d34f4a5b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "examples/yolo_test",
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					],
+					"name" : "SematicSLAM",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "all.tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all.tests-Debug-ba33cedfc34163af297d.json",
+					"name" : "all.tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "check::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-check-Debug-9371ffa8f5e2928002c6.json",
+					"name" : "check",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "check_valgrind::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-check_valgrind-Debug-012339182e4600687c6a.json",
+					"name" : "check_valgrind",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "examples::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-examples-Debug-97927d90b2f4893c7898.json",
+					"name" : "examples",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "semanticSLAM::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-semanticSLAM-Debug-b9f4c40b55e83d427241.json",
+					"name" : "semanticSLAM",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "test_semanticSLAM::@2d81d72d7d13a3f2928f",
+					"jsonFile" : "target-test_semanticSLAM-Debug-96a7a4135411a62226a0.json",
+					"name" : "test_semanticSLAM",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "timing::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-timing-Debug-eb885a1fe64e8f04e6d9.json",
+					"name" : "timing",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "yolo_test::@1fbf9056aa7d081572a3",
+					"jsonFile" : "target-yolo_test-Debug-645bece7ee20ed956816.json",
+					"name" : "yolo_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/lacie-life/Github/Master-Thesis/Code/SemanticSLAM/cmake-build-debug",
+		"source" : "/home/lacie-life/Github/Master-Thesis/Code/SemanticSLAM"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
