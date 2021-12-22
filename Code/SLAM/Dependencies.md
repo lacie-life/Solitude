@@ -6,14 +6,14 @@ In this document we list all the pieces of code included  by ORB-SLAM2 and linke
 
 #####Code in **src** and **include** folders
 
-* *ORBextractor.cc*.
+* *ORBextractor.cpp*.
 This is a modified version of orb.cpp of OpenCV library. The original code is BSD licensed.
 
-* *PnPsolver.h, PnPsolver.cc*.
+* *PnPsolver.h, PnPsolver.cpp*.
 This is a modified version of the epnp.h and epnp.cc of Vincent Lepetit. 
 This code can be found in popular BSD licensed computer vision libraries as [OpenCV](https://github.com/Itseez/opencv/blob/master/modules/calib3d/src/epnp.cpp) and [OpenGV](https://github.com/laurentkneip/opengv/blob/master/src/absolute_pose/modules/Epnp.cpp). The original code is FreeBSD.
 
-* Function *ORBmatcher::DescriptorDistance* in *ORBmatcher.cc*.
+* Function *ORBmatcher::DescriptorDistance* in *ORBmatcher.cpp*.
 The code is from: http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel.
 The code is in the public domain.
 

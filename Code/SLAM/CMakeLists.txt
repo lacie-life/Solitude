@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 2.8)
-project(ORB_SLAM2)
+cmake_minimum_required(VERSION 3.2)
+project(kms_slam)
 
 IF (NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Release)
@@ -12,12 +12,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3 -march=native")
 
 # Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
 if (COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    add_definitions(-DCOMPILEDWITHC11)
-    message(STATUS "Using flag -std=c++11.")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+    add_definitions(-DCOMPILEDWITHC14)
+    message(STATUS "Using flag -std=c++14.")
 elseif (COMPILER_SUPPORTS_CXX0X)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
     add_definitions(-DCOMPILEDWITHC0X)
@@ -29,61 +29,46 @@ endif ()
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 find_package(OpenCV REQUIRED)
-find_package(Eigen3 3.1.0 REQUIRED)
+find_package(Eigen3 3.1.0 REQUIRED NO_MODULE)
 find_package(Pangolin REQUIRED)
 find_package(Cholmod REQUIRED)
 
 include_directories(
         ${PROJECT_SOURCE_DIR}
-        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/include/kms_slam
         ${PROJECT_SOURCE_DIR}/src
         ${EIGEN3_INCLUDE_DIR}
         ${Pangolin_INCLUDE_DIRS}
         ${CHOLMOD_INCLUDE_DIR}
+        ${OpenCV_INCLUDE_DIRS}
+        ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o
 )
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
+file(GLOB HEADERS
+        ${PROJECT_SOURCE_DIR}/include/kms_slam/common/*.h
+        ${PROJECT_SOURCE_DIR}/include/kms_slam/feature/*.h
+        ${PROJECT_SOURCE_DIR}/include/kms_slam/geometry/*.h
+        ${PROJECT_SOURCE_DIR}/include/kms_slam/optimizer/*.h
+        ${PROJECT_SOURCE_DIR}/include/kms_slam/system/*.h
+        ${PROJECT_SOURCE_DIR}/include/kms_slam/visualizer/*.h)
+
+file(GLOB SOURCES
+        ${PROJECT_SOURCE_DIR}/src/common/*.cpp
+        ${PROJECT_SOURCE_DIR}/src/feature/*.cpp
+        ${PROJECT_SOURCE_DIR}/src/geometry/*.cpp
+        ${PROJECT_SOURCE_DIR}/src/optimizer/*.cpp
+        ${PROJECT_SOURCE_DIR}/src/system/*.cpp
+        ${PROJECT_SOURCE_DIR}/src/visualizer/*.cpp)
+
+source_group("Header Files" FILES ${HEADERS})
+source_group("Source Files" FILES ${SOURCES})
+
 add_library(${PROJECT_NAME} SHARED
-        src/System.cc
-        src/Tracking.cc
-        src/LocalMapping.cc
-        src/LoopClosing.cc
-        src/ORBextractor.cc
-        src/ORBmatcher.cc
-        src/FrameDrawer.cc
-        src/Converter.cc
-        src/MapPoint.cc
-        src/KeyFrame.cc
-        src/Map.cc
-        src/MapDrawer.cc
-        src/Optimizer.cc
-        src/PnPsolver.cc
-        src/Frame.cc
-        src/KeyFrameDatabase.cc
-        src/Sim3Solver.cc
-        src/Initializer.cc
-        src/Viewer.cc
-
-        include/Frame.h
-        include/KeyFrame.h
-        include/Tracking.h
-        include/LocalMapping.h
-
-        src/IMU/configparam.h
-        src/IMU/configparam.cpp
-
-        src/IMU/imudata.h
-        src/IMU/imudata.cpp
-        src/IMU/IMUPreintegrator.h
-        src/IMU/IMUPreintegrator.cpp
-        src/IMU/so3.cpp
-        src/IMU/so3.h
-        src/IMU/NavState.h
-        src/IMU/NavState.cpp
-
-        src/IMU/g2otypes.h
-        src/IMU/g2otypes.cpp
+        ${HEADERS}
+        ${SOURCES}
         )
 
 target_link_libraries(${PROJECT_NAME}

@@ -23,7 +23,7 @@ echo "Uncompress vocabulary ..."
 #tar -xf ORBvoc.txt.tar.gz
 #cd ..
 
-echo "Configuring and building ORB_SLAM2 ..."
+echo "Configuring and building kms_slam ..."
 
 mkdir build
 cd build
