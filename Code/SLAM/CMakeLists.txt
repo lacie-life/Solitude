@@ -10,9 +10,7 @@ MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3 -march=native")
 
-
-
-# Check C++11 or C++0x support
+# Check C++14 or C++0x support
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -85,7 +83,11 @@ target_link_libraries(${PROJECT_NAME}
         ${LAPACK_LIBRARIES}
         )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
+# set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
+
+## Build test
+
+
 
 ## Build examples
 
@@ -121,14 +123,14 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 #target_link_libraries(mono_euroc ${PROJECT_NAME})
 
 
-add_executable(ORBVIO_euroc
-        Examples/ROS/ORB_VIO/src/noros_vio.cc)
-target_link_libraries(ORBVIO_euroc ${PROJECT_NAME})
+#add_executable(ORBVIO_euroc
+#        Examples/ROS/ORB_VIO/src/noros_vio.cc)
+#target_link_libraries(ORBVIO_euroc ${PROJECT_NAME})
 
 
-add_executable(StereoORBVIO_euroc
-        Examples/ROS/ORB_VIO/src/stereo_noros_vio.cc)
-target_link_libraries(StereoORBVIO_euroc ${PROJECT_NAME})
+#add_executable(StereoORBVIO_euroc
+#        Examples/ROS/ORB_VIO/src/stereo_noros_vio.cc)
+#target_link_libraries(StereoORBVIO_euroc ${PROJECT_NAME})
 
 ## Build tools
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/tools)

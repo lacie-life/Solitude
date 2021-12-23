@@ -7,7 +7,6 @@
 
 namespace kms_slam {
 
-
     MapDrawer::MapDrawer(Map *pMap, const string &strSettingPath) : mpMap(pMap) {
         cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ);
 
