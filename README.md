@@ -9,7 +9,7 @@
     - [ ] FAST feature in CUDA
     - [x] ORB_SLAM2 [Source code](https://github.com/raulmur/ORB_SLAM2)
 - [ ] Build a Stereo VIO SLAM based on ORB_SLAM2 => kms_slam
-    - [ ] Run VIO ORB_SLAM2
+    - [x] Run VIO ORB_SLAM2
     - [ ] Modify IMU preintegration of VIO ORB_SLAM2 (based on [Paper](https://arxiv.org/abs/1512.02363))
 - [ ] Add Fast feature and KTL tracking to kms_slam
     - [ ] Faster than FAST [Paper](http://rpg.ifi.uzh.ch/docs/IROS20_Nagy.pdf) 
