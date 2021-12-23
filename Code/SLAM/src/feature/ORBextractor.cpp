@@ -92,7 +92,7 @@ namespace kms_slam {
         const uchar *center = &img.at<uchar>(cvRound(kpt.pt.y), cvRound(kpt.pt.x));
         const int step = (int) img.step;
 
-#define GET_VALUE(idx) \
+    #define GET_VALUE(idx) \
         center[cvRound(pattern[idx].x*b + pattern[idx].y*a)*step + \
                cvRound(pattern[idx].x*a - pattern[idx].y*b)]
 
@@ -127,7 +127,7 @@ namespace kms_slam {
             desc[i] = (uchar) val;
         }
 
-#undef GET_VALUE
+    #undef GET_VALUE
     }
 
 

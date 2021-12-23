@@ -95,71 +95,59 @@ namespace Sophus {
         unit_quaternion_.setIdentity();
     }
 
-    SO3
-    ::SO3(const SO3 &other) : unit_quaternion_(other.unit_quaternion_) {
+    SO3::SO3(const SO3 &other) : unit_quaternion_(other.unit_quaternion_) {
         unit_quaternion_.normalize();
     }
 
-    SO3
-    ::SO3(const Matrix3d &R) : unit_quaternion_(R) {
+    SO3::SO3(const Matrix3d &R) : unit_quaternion_(R) {
         unit_quaternion_.normalize();
     }
 
-    SO3
-    ::SO3(const Quaterniond &quat) : unit_quaternion_(quat) {
+    SO3::SO3(const Quaterniond &quat) : unit_quaternion_(quat) {
         assert(unit_quaternion_.squaredNorm() > SMALL_EPS);
         unit_quaternion_.normalize();
     }
 
-    SO3
-    ::SO3(double rot_x, double rot_y, double rot_z) {
+    SO3::SO3(double rot_x, double rot_y, double rot_z) {
         unit_quaternion_
                 = (SO3::exp(Vector3d(rot_x, 0.f, 0.f))
                    * SO3::exp(Vector3d(0.f, rot_y, 0.f))
                    * SO3::exp(Vector3d(0.f, 0.f, rot_z))).unit_quaternion_;
     }
 
-    void SO3
-    ::operator=(const SO3 &other) {
+    void SO3::operator=(const SO3 &other) {
         this->unit_quaternion_ = other.unit_quaternion_;
     }
 
-    SO3 SO3
-    ::operator*(const SO3 &other) const {
+    SO3 SO3::operator*(const SO3 &other) const {
         SO3 result(*this);
         result.unit_quaternion_ *= other.unit_quaternion_;
         result.unit_quaternion_.normalize();
         return result;
     }
 
-    void SO3
-    ::operator*=(const SO3 &other) {
+    void SO3::operator*=(const SO3 &other) {
         unit_quaternion_ *= other.unit_quaternion_;
         unit_quaternion_.normalize();
     }
 
-    Vector3d SO3
-    ::operator*(const Vector3d &xyz) const {
+    Vector3d SO3::operator*(const Vector3d &xyz) const {
         return unit_quaternion_._transformVector(xyz);
     }
 
-    SO3 SO3
-    ::inverse() const {
+    SO3 SO3::inverse() const {
         return SO3(unit_quaternion_.conjugate());
     }
 
-    Matrix3d SO3
-    ::matrix() const {
+    Matrix3d SO3::matrix() const {
         return unit_quaternion_.toRotationMatrix();
     }
 
-    Matrix3d SO3
-    ::Adj() const {
+    Matrix3d SO3::Adj() const {
         return matrix();
     }
 
-    Matrix3d SO3
-    ::generator(int i) {
+    Matrix3d SO3::generator(int i) {
         assert(i >= 0 && i < 3);
         Vector3d e;
         e.setZero();
@@ -167,19 +155,16 @@ namespace Sophus {
         return hat(e);
     }
 
-    Vector3d SO3
-    ::log() const {
+    Vector3d SO3::log() const {
         return SO3::log(*this);
     }
 
-    Vector3d SO3
-    ::log(const SO3 &other) {
+    Vector3d SO3::log(const SO3 &other) {
         double theta;
         return logAndTheta(other, &theta);
     }
 
-    Vector3d SO3
-    ::logAndTheta(const SO3 &other, double *theta) {
+    Vector3d SO3::logAndTheta(const SO3 &other, double *theta) {
 
         double n = other.unit_quaternion_.vec().norm();
         double w = other.unit_quaternion_.w();
@@ -214,14 +199,12 @@ namespace Sophus {
         return two_atan_nbyw_by_n * other.unit_quaternion_.vec();
     }
 
-    SO3 SO3
-    ::exp(const Vector3d &omega) {
+    SO3 SO3::exp(const Vector3d &omega) {
         double theta;
         return expAndTheta(omega, &theta);
     }
 
-    SO3 SO3
-    ::expAndTheta(const Vector3d &omega, double *theta) {
+    SO3 SO3::expAndTheta(const Vector3d &omega, double *theta) {
         *theta = omega.norm();
         double half_theta = 0.5 * (*theta);
 
@@ -242,8 +225,7 @@ namespace Sophus {
                                imag_factor * omega.z()));
     }
 
-    Matrix3d SO3
-    ::hat(const Vector3d &v) {
+    Matrix3d SO3::hat(const Vector3d &v) {
         Matrix3d Omega;
         Omega << 0, -v(2), v(1)
                 , v(2), 0, -v(0)
@@ -251,30 +233,25 @@ namespace Sophus {
         return Omega;
     }
 
-    Vector3d SO3
-    ::vee(const Matrix3d &Omega) {
+    Vector3d SO3::vee(const Matrix3d &Omega) {
         assert(fabs(Omega(2, 1) + Omega(1, 2)) < SMALL_EPS);
         assert(fabs(Omega(0, 2) + Omega(2, 0)) < SMALL_EPS);
         assert(fabs(Omega(1, 0) + Omega(0, 1)) < SMALL_EPS);
         return Vector3d(Omega(2, 1), Omega(0, 2), Omega(1, 0));
     }
 
-    Vector3d SO3
-    ::lieBracket(const Vector3d &omega1, const Vector3d &omega2) {
+    Vector3d SO3::lieBracket(const Vector3d &omega1, const Vector3d &omega2) {
         return omega1.cross(omega2);
     }
 
-    Matrix3d SO3
-    ::d_lieBracketab_by_d_a(const Vector3d &b) {
+    Matrix3d SO3::d_lieBracketab_by_d_a(const Vector3d &b) {
         return -hat(b);
     }
 
-    void SO3::
-    setQuaternion(const Quaterniond &quaternion) {
+    void SO3::setQuaternion(const Quaterniond &quaternion) {
         assert(quaternion.norm() != 0);
         unit_quaternion_ = quaternion;
         unit_quaternion_.normalize();
     }
 
-
-}
+} // namespace kms_slam

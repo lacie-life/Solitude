@@ -246,7 +246,7 @@ namespace g2o {
         //
         virtual void linearizeOplus();
 
-//TODO   新加了bf，所以用该该函数的地方需要调整
+        //TODO   Added bf, so the place where this function is used needs to be adjusted
         void SetParams(const double &fx_, const double &fy_, const double &cx_, const double &cy_, const double &bf_,
                        const Matrix3d &Rbc_, const Vector3d &Pbc_) {
             fx = fx_;
@@ -346,8 +346,8 @@ namespace g2o {
         Vector3d Pw;
     };
 
-//rocky for stereo vio
-//
+    //rocky for stereo vio
+    //
     class EdgeStereoNavStatePVRPointXYZOnlyPose : public BaseUnaryEdge<3, Vector3d, VertexNavStatePVR> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -409,7 +409,7 @@ namespace g2o {
         //
         virtual void linearizeOplus();
 
-//TODO  这里加了bf
+        //TODO  Bf is added here
         void SetParams(const double &fx_, const double &fy_, const double &cx_, const double &cy_, const double &bf_,
                        const Matrix3d &Rbc_, const Vector3d &Pbc_, const Vector3d &Pw_) {
             fx = fx_;
@@ -433,9 +433,9 @@ namespace g2o {
     };
 
 
-/**
- * @brief The EdgeNavStatePrior class
- */
+    /**
+     * @brief The EdgeNavStatePrior class
+     */
     class EdgeNavStatePriorPVRBias : public BaseBinaryEdge<15, NavState, VertexNavStatePVR, VertexNavStateBias> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -452,12 +452,12 @@ namespace g2o {
 
     };
 
-//------------------------------------------
+    //------------------------------------------
 
-/**
- * @brief The VertexNavState class
- * Vertex of tightly-coupled Visual-Inertial optimization
- */
+    /**
+     * @brief The VertexNavState class
+     * Vertex of tightly-coupled Visual-Inertial optimization
+     */
     class VertexNavState : public BaseVertex<15, NavState> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -475,9 +475,9 @@ namespace g2o {
         virtual void oplusImpl(const double *update_);
     };
 
-/**
- * @brief The EdgeNavStatePrior class
- */
+    /**
+     * @brief The EdgeNavStatePrior class
+     */
     class EdgeNavStatePrior : public BaseUnaryEdge<15, NavState, VertexNavState> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -494,9 +494,9 @@ namespace g2o {
 
     };
 
-/**
- * @brief The VertexGravityW class
- */
+    /**
+     * @brief The VertexGravityW class
+     */
     class VertexGravityW : public BaseVertex<2, Vector3d> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -514,9 +514,9 @@ namespace g2o {
         virtual void oplusImpl(const double *update_);
     };
 
-/**
- * @brief The EdgeNavStateGw class
- */
+    /**
+     * @brief The EdgeNavStateGw class
+     */
     class EdgeNavStateGw : public BaseMultiEdge<15, IMUPreintegrator> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -532,11 +532,11 @@ namespace g2o {
         virtual void linearizeOplus();
     };
 
-/**
- * @brief The EdgeNavState class
- * Edge between NavState_i and NavState_j, vertex[0]~i, vertex[1]~j
- * Measurement~Vector15d: 9Dof-IMUPreintegrator measurement & 6Dof-IMU bias change all Zero
- */
+    /**
+     * @brief The EdgeNavState class
+     * Edge between NavState_i and NavState_j, vertex[0]~i, vertex[1]~j
+     * Measurement~Vector15d: 9Dof-IMUPreintegrator measurement & 6Dof-IMU bias change all Zero
+     */
     class EdgeNavState : public BaseBinaryEdge<15, IMUPreintegrator, VertexNavState, VertexNavState> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -560,11 +560,11 @@ namespace g2o {
         Vector3d GravityVec;
     };
 
-/**
- * @brief The EdgeNavStatePointXYZ class
- * Edge between NavState and Point3D, vertex[0]~Point3D, vertex[1]~NavState
- * Measurement~Vector2d: 2Dof image feature position
- */
+    /**
+     * @brief The EdgeNavStatePointXYZ class
+     * Edge between NavState and Point3D, vertex[0]~Point3D, vertex[1]~NavState
+     * Measurement~Vector2d: 2Dof image feature position
+     */
     class EdgeNavStatePointXYZ : public BaseBinaryEdge<2, Vector2d, VertexSBAPointXYZ, VertexNavState> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -722,10 +722,10 @@ namespace g2o {
     };
 
 
-/**
- * @brief The VertexGyrBias class
- * For gyroscope bias compuation in Visual-Inertial initialization
- */
+    /**
+     * @brief The VertexGyrBias class
+     * For gyroscope bias compuation in Visual-Inertial initialization
+     */
     class VertexGyrBias : public BaseVertex<3, Vector3d> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -743,10 +743,10 @@ namespace g2o {
         virtual void oplusImpl(const double *update_);
     };
 
-/**
- * @brief The EdgeGyrBias class
- * For gyroscope bias compuation in Visual-Inertial initialization
- */
+    /**
+     * @brief The EdgeGyrBias class
+     * For gyroscope bias compuation in Visual-Inertial initialization
+     */
     class EdgeGyrBias : public BaseUnaryEdge<3, Vector3d, VertexGyrBias> {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW

@@ -65,7 +65,6 @@ namespace kms_slam {
 
     private:
 
-
     };
 
 } // namespace kms_slam

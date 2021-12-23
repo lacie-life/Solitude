@@ -8,7 +8,7 @@
 
 namespace kms_slam {
 
-// THIS IS THE INITIALIZER FOR MONOCULAR SLAM. NOT USED IN THE STEREO OR RGBD CASE.
+    // THIS IS THE INITIALIZER FOR MONOCULAR SLAM. NOT USED IN THE STEREO OR RGBD CASE.
     class Initializer {
         typedef pair<int, int> Match;
 

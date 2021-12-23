@@ -397,8 +397,7 @@ namespace kms_slam {
     }
 
 
-    IMUPreintegrator
-    Tracking::GetIMUPreIntSinceLastKF(Frame *pCurF, KeyFrame *pLastKF, const std::vector<IMUData> &vIMUSInceLastKF) {
+    IMUPreintegrator Tracking::GetIMUPreIntSinceLastKF(Frame *pCurF, KeyFrame *pLastKF, const std::vector<IMUData> &vIMUSInceLastKF) {
         // Reset pre-integrator first
         IMUPreintegrator IMUPreInt;
         IMUPreInt.reset();
@@ -485,8 +484,7 @@ namespace kms_slam {
     }
 
 //NOTE    GrabImageStereoVI(imLeft,imRight,vimu,timestamp);
-    cv::Mat
-    Tracking::GrabImageStereoVI(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const std::vector<IMUData> &vimu,
+    cv::Mat Tracking::GrabImageStereoVI(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const std::vector<IMUData> &vimu,
                                 const double &timestamp) {
         mvIMUSinceLastKF.insert(mvIMUSinceLastKF.end(), vimu.begin(), vimu.end());
         mImGray = imRectLeft;

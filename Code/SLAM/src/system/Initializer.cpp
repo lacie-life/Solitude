@@ -6,7 +6,7 @@
 #include "optimizer/Optimizer.h"
 #include "feature/ORBmatcher.h"
 
-#include<thread>
+#include <thread>
 
 namespace kms_slam {
 
@@ -262,8 +262,7 @@ namespace kms_slam {
         return u * cv::Mat::diag(w) * vt;
     }
 
-    float
-    Initializer::CheckHomography(const cv::Mat &H21, const cv::Mat &H12, vector<bool> &vbMatchesInliers, float sigma) {
+    float Initializer::CheckHomography(const cv::Mat &H21, const cv::Mat &H12, vector<bool> &vbMatchesInliers, float sigma) {
         const int N = mvMatches12.size();
 
         const float h11 = H21.at<float>(0, 0);
@@ -677,8 +676,7 @@ namespace kms_slam {
         return false;
     }
 
-    void
-    Initializer::Triangulate(const cv::KeyPoint &kp1, const cv::KeyPoint &kp2, const cv::Mat &P1, const cv::Mat &P2,
+    void Initializer::Triangulate(const cv::KeyPoint &kp1, const cv::KeyPoint &kp2, const cv::Mat &P1, const cv::Mat &P2,
                              cv::Mat &x3D) {
         cv::Mat A(4, 4, CV_32F);
 
@@ -693,8 +691,7 @@ namespace kms_slam {
         x3D = x3D.rowRange(0, 3) / x3D.at<float>(3);
     }
 
-    void
-    Initializer::Normalize(const vector <cv::KeyPoint> &vKeys, vector <cv::Point2f> &vNormalizedPoints, cv::Mat &T) {
+    void Initializer::Normalize(const vector <cv::KeyPoint> &vKeys, vector <cv::Point2f> &vNormalizedPoints, cv::Mat &T) {
         float meanX = 0;
         float meanY = 0;
         const int N = vKeys.size();

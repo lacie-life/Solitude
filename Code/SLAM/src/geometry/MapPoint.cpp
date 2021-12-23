@@ -2,7 +2,7 @@
 #include "geometry/MapPoint.h"
 #include "feature/ORBmatcher.h"
 
-#include<mutex>
+#include <mutex>
 
 namespace kms_slam {
 

@@ -20,16 +20,13 @@ namespace kms_slam {
         void static GlobalBundleAdjustmentNavState(Map *pMap, const cv::Mat &gw, int nIterations, bool *pbStopFlag,
                                                    const unsigned long nLoopKF, const bool bRobust);
 
-        int static
-        PoseOptimization(Frame *pFrame, KeyFrame *pLastKF, const IMUPreintegrator &imupreint, const cv::Mat &gw,
+        int static PoseOptimization(Frame *pFrame, KeyFrame *pLastKF, const IMUPreintegrator &imupreint, const cv::Mat &gw,
                          const bool &bComputeMarg = false);
 
-        int static
-        PoseOptimization(Frame *pFrame, Frame *pLastFrame, const IMUPreintegrator &imupreint, const cv::Mat &gw,
+        int static PoseOptimization(Frame *pFrame, Frame *pLastFrame, const IMUPreintegrator &imupreint, const cv::Mat &gw,
                          const bool &bComputeMarg = false);
 
-        void static
-        LocalBundleAdjustmentNavState(KeyFrame *pKF, const std::list<KeyFrame *> &lLocalKeyFrames, bool *pbStopFlag,
+        void static LocalBundleAdjustmentNavState(KeyFrame *pKF, const std::list<KeyFrame *> &lLocalKeyFrames, bool *pbStopFlag,
                                       Map *pMap, cv::Mat &gw, LocalMapping *pLM = NULL);
 
         Vector3d static OptimizeInitialGyroBias(const std::list<KeyFrame *> &lLocalKeyFrames);
@@ -38,8 +35,7 @@ namespace kms_slam {
 
         Vector3d static OptimizeInitialGyroBias(const std::vector<Frame> &vFrames);
 
-        void static
-        LocalBundleAdjustment(KeyFrame *pKF, const std::list<KeyFrame *> &lLocalKeyFrames, bool *pbStopFlag, Map *pMap,
+        void static LocalBundleAdjustment(KeyFrame *pKF, const std::list<KeyFrame *> &lLocalKeyFrames, bool *pbStopFlag, Map *pMap,
                               LocalMapping *pLM = NULL);
 
     public:

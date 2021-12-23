@@ -300,8 +300,7 @@ namespace kms_slam {
 
     }
 
-    int
-    Optimizer::PoseOptimization(Frame *pFrame, Frame *pLastFrame, const IMUPreintegrator &imupreint, const cv::Mat &gw,
+    int Optimizer::PoseOptimization(Frame *pFrame, Frame *pLastFrame, const IMUPreintegrator &imupreint, const cv::Mat &gw,
                                 const bool &bComputeMarg) {
         // Extrinsics
         Matrix4d Tbc = ConfigParam::GetEigTbc();
@@ -790,8 +789,7 @@ namespace kms_slam {
         return nInitialCorrespondences - nBad;
     }
 
-    int
-    Optimizer::PoseOptimization(Frame *pFrame, KeyFrame *pLastKF, const IMUPreintegrator &imupreint, const cv::Mat &gw,
+    int Optimizer::PoseOptimization(Frame *pFrame, KeyFrame *pLastKF, const IMUPreintegrator &imupreint, const cv::Mat &gw,
                                 const bool &bComputeMarg) {
         // Extrinsics
         Matrix4d Tbc = ConfigParam::GetEigTbc();

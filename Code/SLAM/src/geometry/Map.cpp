@@ -1,7 +1,7 @@
 
 #include "geometry/Map.h"
 
-#include<mutex>
+#include <mutex>
 
 namespace kms_slam {
 

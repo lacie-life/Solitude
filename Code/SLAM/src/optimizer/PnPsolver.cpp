@@ -94,8 +94,7 @@ namespace kms_slam {
     }
 
 
-    void
-    PnPsolver::SetRansacParameters(double probability, int minInliers, int maxIterations, int minSet, float epsilon,
+    void PnPsolver::SetRansacParameters(double probability, int minInliers, int maxIterations, int minSet, float epsilon,
                                    float th2) {
         mRansacProb = probability;
         mRansacMinInliers = minInliers;
