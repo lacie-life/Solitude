@@ -8,6 +8,8 @@
     - [ ] rpg_svo_pro_open framework
     - [ ] FAST feature in CUDA
     - [x] ORB_SLAM2 [Source code](https://github.com/raulmur/ORB_SLAM2)
+- [ ] Review Data Accociation Method
+    - [ ] QuadricFeature
 - [ ] Build a Stereo VIO SLAM based on ORB_SLAM2 => kms_slam
     - [x] Run VIO ORB_SLAM2
     - [x] Modify IMU preintegration of VIO ORB_SLAM2 (based on [Paper](https://arxiv.org/abs/1512.02363))
@@ -17,12 +19,12 @@
 - [ ] Using factor graph in globally bundle adjusted map
     - [ ] Ref rpg_svo_pro_open
     - [ ] iSAM2 [Paper](http://frank.dellaert.com/pub/Kaess12ijrr.pdf)
-- [ ] Run QradricSLAM (object detect by Yolo) [Paper](https://arxiv.org/abs/1804.04011)
-- [ ] Add Qradric feature to kms_slam mapping
+- [ ] Run QuadricSLAM (object detect by Yolo) [Paper](https://arxiv.org/abs/1804.04011)
+- [ ] Add Quadric feature to kms_slam mapping
 
 ## 4D Reconstruction TODO
 
-- [ ] Run QradricSLAM (object detect by Yolo) [Paper](https://arxiv.org/abs/1804.04011)
+- [ ] Run QuadricSLAM (object detect by Yolo) [Paper](https://arxiv.org/abs/1804.04011)
 - [ ] GTSAM Factor Graph
 - [ ] Review 4D Reconstruction
 - [ ] Encode Point Cloud by Quadric feature
