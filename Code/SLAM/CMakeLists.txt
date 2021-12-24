@@ -85,9 +85,12 @@ target_link_libraries(${PROJECT_NAME}
 
 # set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 
-## Build test
+## Build VIO test
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/VIO)
 
+add_executable(vio-mono Examples/VIO/vio-mono.cpp)
+target_link_libraries(vio-mono ${PROJECT_NAME})
 
 ## Build examples
 
@@ -97,16 +100,10 @@ target_link_libraries(${PROJECT_NAME}
 #Examples/RGB-D/rgbd_tum.cc)
 #target_link_libraries(rgbd_tum ${PROJECT_NAME})
 
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo)
-
-#add_executable(stereo_kitti
-#Examples/Stereo/stereo_kitti.cc)
-#target_link_libraries(stereo_kitti ${PROJECT_NAME})
 
 #add_executable(stereo_euroc
 #Examples/Stereo/stereo_euroc.cc)
 #target_link_libraries(stereo_euroc ${PROJECT_NAME})
-
 
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
 

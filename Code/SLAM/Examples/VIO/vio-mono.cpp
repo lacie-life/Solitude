@@ -23,7 +23,6 @@
 #include <functional>
 #include <atomic>
 
-
 using namespace std;
 
 typedef struct ImageList
@@ -211,20 +210,17 @@ int main(int argc, char **argv)
         cerr << endl << "There is no enough images." << endl;
     }
 
-
-
-
     for (int j = 0; j < iListData.size() - 1; j++)
     {
         std::vector<kms_slam::IMUData> vimuData;
 
         for (unsigned int i = 0; i < 10; i++)
         {
-            //                cout<<"*************************************************************************"<<endl;
-            //char temp[10] = {0};
+            // cout << "*************************************************************************" << endl;
+            // char temp[10] = {0};
 
-            //substring(temp,imuTime,0,10);
-            //              cout<<"=========================================================================="<<endl;
+            // substring(temp,imuTime,0,10);
+            // cout << "==========================================================================" << endl;
             if (bAccMultiply98)
             {
                 allimuData[10 * j + i]._a(0) *= g3dm;
