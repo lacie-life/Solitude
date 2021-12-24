@@ -20,6 +20,7 @@
 #include <gtsam_quadrics/base/QuadricProjectionException.h>
 #include <gtsam_quadrics/geometry/BoundingBoxFactor.h>
 #include <gtsam_quadrics/geometry/QuadricCamera.h>
+#include <boost/function.hpp>
 
 #define NUMERICAL_DERIVATIVE false
 
@@ -76,7 +77,7 @@ gtsam::Vector BoundingBoxFactor::evaluateError(
     gtsam::Vector4 error = predictedBounds.vector() - measured_.vector();
 
     if (NUMERICAL_DERIVATIVE) {
-      std::function<gtsam::Vector(const gtsam::Pose3&,
+      boost::function<gtsam::Vector(const gtsam::Pose3&,
                                   const ConstrainedDualQuadric&)>
           funPtr(boost::bind(&BoundingBoxFactor::evaluateError, this, _1, _2,
                              boost::none, boost::none));
