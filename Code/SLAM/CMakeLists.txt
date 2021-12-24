@@ -68,8 +68,7 @@ source_group("Source Files" FILES ${SOURCES})
 
 add_library(${PROJECT_NAME} SHARED
         ${HEADERS}
-        ${SOURCES}
-        )
+        ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME}
         ${OpenCV_LIBS}
@@ -80,8 +79,7 @@ target_link_libraries(${PROJECT_NAME}
         cholmod
         ${CHOLMOD_LIBRARIES}
         ${BLAS_LIBRARIES}
-        ${LAPACK_LIBRARIES}
-        )
+        ${LAPACK_LIBRARIES})
 
 # set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 
