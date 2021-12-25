@@ -84,17 +84,17 @@ target_link_libraries(${PROJECT_NAME}
         ${EIGEN3_LIBS}
         ${Pangolin_LIBRARIES}
         ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_core.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_stuff.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_sba.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_solver_csparse.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_csparse_extension.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_solver_dense.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_solver_eigen.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_sim3.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_slam3d.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_slam2d.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/fast/build/libfast.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_core.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_stuff.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_sba.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_solver_csparse.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_csparse_extension.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_solver_dense.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_solver_eigen.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_sim3.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_slam3d.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_slam2d.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/fast/build/libfast.so
         cholmod
         ${CHOLMOD_LIBRARIES}
         ${BLAS_LIBRARIES}
