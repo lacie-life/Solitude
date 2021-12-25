@@ -42,6 +42,11 @@ find_package(G2O REQUIRED)
 INCLUDE_DIRECTORIES("/usr/local/include/")
 LINK_directories("/usr/local/lib")
 
+# GLEW
+find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIRS})
+link_libraries(${GLEW_LIBRARIES})
+
 include_directories(
         ${PROJECT_SOURCE_DIR}
         ${PROJECT_SOURCE_DIR}/include/kms_slam
@@ -83,7 +88,7 @@ target_link_libraries(${PROJECT_NAME}
         ${OpenCV_LIBS}
         ${EIGEN3_LIBS}
         ${Pangolin_LIBRARIES}
-        ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2
+        ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
         ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_core.so
         ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_stuff.so
         ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_sba.so
@@ -94,11 +99,11 @@ target_link_libraries(${PROJECT_NAME}
         ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_sim3.so
         ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_slam3d.so
         ${PROJECT_SOURCE_DIR}/Thirdparty/g2o_lib/lib/libg2o_types_slam2d.so
-        ${PROJECT_SOURCE_DIR}/Thirdparty/fast/build/libfast.so
         cholmod
         ${CHOLMOD_LIBRARIES}
         ${BLAS_LIBRARIES}
-        ${LAPACK_LIBRARIES})
+        ${LAPACK_LIBRARIES}
+        GLEW::GLEW)
 
 # set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 
