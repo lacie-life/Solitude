@@ -944,9 +944,9 @@ namespace kms_slam {
                         bool tmpbool;
 
                         if (!mbMonocular) {
-                            tmpbool = TryInitStereoVIO();//如果是不是单目，则scale为1
+                            tmpbool = TryInitStereoVIO();
                         } else {
-                            tmpbool = TryInitVIO();//单目的vio初始化
+                            tmpbool = TryInitVIO();
                         }
 
                         SetVINSInited(tmpbool);
