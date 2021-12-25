@@ -2,11 +2,11 @@
 
 #include "g2o/core/block_solver.h"
 #include "g2o/core/optimization_algorithm_levenberg.h"
-#include "g2o/solvers/linear_solver_eigen.h"
-#include "g2o/types/types_six_dof_expmap.h"
+#include "g2o/solvers/eigen/linear_solver_eigen.h"
+#include "g2o/types/sba/types_six_dof_expmap.h"
 #include "g2o/core/robust_kernel_impl.h"
-#include "g2o/solvers/linear_solver_dense.h"
-#include "g2o/types/types_seven_dof_expmap.h"
+#include "g2o/solvers/dense/linear_solver_dense.h"
+#include "g2o/types/sim3/types_seven_dof_expmap.h"
 
 #include <Eigen/StdVector>
 
@@ -18,7 +18,7 @@
 #include "common/g2otypes.h"
 #include "g2o/core/optimization_algorithm_gauss_newton.h"
 #include "g2o/core/optimization_algorithm_with_hessian.h"
-#include "g2o/solvers/linear_solver_cholmod.h"
+#include "g2o/solvers/cholmod/linear_solver_cholmod.h"
 
 namespace kms_slam {
 
@@ -42,13 +42,24 @@ namespace kms_slam {
         vbNotIncludedMP.resize(vpMP.size());
 
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolverX::LinearSolverType *linearSolver;
+        optimizer.setVerbose(false);
 
-        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//        g2o::BlockSolverX::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//
+//        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+        // New g2o version
+        typedef g2o::BlockSolver<g2o::BlockSolverX> BlockSolverType;
+        typedef g2o::LinearSolverDense<BlockSolverType::PoseMatrixType> LinearSolverType;
 
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
+
         optimizer.setAlgorithm(solver);
 
         if (pbStopFlag)
@@ -310,15 +321,25 @@ namespace kms_slam {
         Vector3d GravityVec = Converter::toVector3d(gw);
 
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolverX::LinearSolverType *linearSolver;
+        optimizer.setVerbose(false);
 
-        //linearSolver = new g2o::LinearSolverDense<g2o::BlockSolverX::PoseMatrixType>();
-        linearSolver = new g2o::LinearSolverCholmod<g2o::BlockSolverX::PoseMatrixType>();
+//        g2o::BlockSolverX::LinearSolverType *linearSolver;
+//
+//        //linearSolver = new g2o::LinearSolverDense<g2o::BlockSolverX::PoseMatrixType>();
+//        linearSolver = new g2o::LinearSolverCholmod<g2o::BlockSolverX::PoseMatrixType>();
+//
+//        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+//        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
 
-        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverX> BlockSolverType;
+        typedef g2o::LinearSolverCholmod<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
-        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         int nInitialCorrespondences = 0;
@@ -751,7 +772,7 @@ namespace kms_slam {
             margVerteces.push_back(optimizer.vertex(FramePVRId));
             margVerteces.push_back(optimizer.vertex(FrameBiasId));
 
-            g2o::SparseBlockMatrixXd spinv;
+            g2o::SparseBlockMatrixX spinv;
             optimizer.computeMarginals(spinv, margVerteces);
             // spinv include 2 blocks, 9x9-(0,0) for PVR, 6x6-(1,1) for Bias
             Matrix<double, 15, 15> margCov = Matrix<double, 15, 15>::Zero();
@@ -799,15 +820,24 @@ namespace kms_slam {
         Vector3d GravityVec = Converter::toVector3d(gw);
 
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolverX::LinearSolverType *linearSolver;
+        optimizer.setVerbose(false);
+//        g2o::BlockSolverX::LinearSolverType *linearSolver;
+//
+//        //linearSolver = new g2o::LinearSolverDense<g2o::BlockSolverX::PoseMatrixType>();
+//        linearSolver = new g2o::LinearSolverCholmod<g2o::BlockSolverX::PoseMatrixType>();
+//
+//        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+//        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
 
-        //linearSolver = new g2o::LinearSolverDense<g2o::BlockSolverX::PoseMatrixType>();
-        linearSolver = new g2o::LinearSolverCholmod<g2o::BlockSolverX::PoseMatrixType>();
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverX> BlockSolverType;
+        typedef g2o::LinearSolverCholmod<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
-
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
-        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         int nInitialCorrespondences = 0;
@@ -1081,7 +1111,7 @@ namespace kms_slam {
             margVerteces.push_back(optimizer.vertex(FrameBiasId));
 
             //TODO: how to get the joint marginalized covariance of PVR&Bias
-            g2o::SparseBlockMatrixXd spinv;
+            g2o::SparseBlockMatrixX spinv;
             optimizer.computeMarginals(spinv, margVerteces);
             // spinv include 2 blocks, 9x9-(0,0) for PVR, 6x6-(1,1) for Bias
             Matrix<double, 15, 15> margCovInv = Matrix<double, 15, 15>::Zero();
@@ -1188,14 +1218,24 @@ namespace kms_slam {
 
         // Setup optimizer
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolverX::LinearSolverType *linearSolver;
+        optimizer.setVerbose(false);
 
-        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//        g2o::BlockSolverX::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//
+//        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+//
+//        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverX> BlockSolverType;
+        typedef g2o::LinearSolverEigen<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         if (pbStopFlag)
@@ -1641,14 +1681,24 @@ namespace kms_slam {
 
         // Setup optimizer
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolverX::LinearSolverType *linearSolver;
+        optimizer.setVerbose(false);
 
-        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//        g2o::BlockSolverX::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//
+//        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+//
+//        g2o::OptimizationAlgorithmGaussNewton *solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
+//        //g2o::OptimizationAlgorithmLevenberg* solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverX> BlockSolverType;
+        typedef g2o::LinearSolverEigen<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmGaussNewton(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::OptimizationAlgorithmGaussNewton *solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
-        //g2o::OptimizationAlgorithmLevenberg* solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         // Add vertex of gyro bias, to optimizer graph
@@ -1707,14 +1757,24 @@ namespace kms_slam {
 
         // Setup optimizer
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolverX::LinearSolverType *linearSolver;
+        optimizer.setVerbose(false);
 
-        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//        g2o::BlockSolverX::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolverX::PoseMatrixType>();
+//
+//        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+//
+//        g2o::OptimizationAlgorithmGaussNewton *solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
+//        //g2o::OptimizationAlgorithmLevenberg* solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverX> BlockSolverType;
+        typedef g2o::LinearSolverEigen<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmGaussNewton(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::OptimizationAlgorithmGaussNewton *solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
-        //g2o::OptimizationAlgorithmLevenberg* solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         // Add vertex of gyro bias, to optimizer graph
@@ -1833,14 +1893,23 @@ namespace kms_slam {
 
         // Setup optimizer
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
+//        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_6_3::PoseMatrixType>();
+//
+//        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_6_3::PoseMatrixType>();
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> BlockSolverType;
+        typedef g2o::LinearSolverDense<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
-
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
         optimizer.setAlgorithm(solver);
+        optimizer.setVerbose(false);
 
         if (pbStopFlag)
             optimizer.setForceStopFlag(pbStopFlag);
@@ -2113,13 +2182,21 @@ namespace kms_slam {
         vbNotIncludedMP.resize(vpMP.size());
 
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
+//        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_6_3::PoseMatrixType>();
+//
+//        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_6_3::PoseMatrixType>();
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> BlockSolverType;
+        typedef g2o::LinearSolverEigen<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
-
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         if (pbStopFlag)
@@ -2280,15 +2357,24 @@ namespace kms_slam {
 
     int Optimizer::PoseOptimization(Frame *pFrame) {
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
 
-        //linearSolver = new g2o::LinearSolverDense<g2o::BlockSolver_6_3::PoseMatrixType>();
-        linearSolver = new g2o::LinearSolverCholmod<g2o::BlockSolver_6_3::PoseMatrixType>();
+//        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
+//
+//        //linearSolver = new g2o::LinearSolverDense<g2o::BlockSolver_6_3::PoseMatrixType>();
+//        linearSolver = new g2o::LinearSolverCholmod<g2o::BlockSolver_6_3::PoseMatrixType>();
+//
+//        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+//        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
 
-        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> BlockSolverType;
+        typedef g2o::LinearSolverCholmod<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
-        //g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         int nInitialCorrespondences = 0;
@@ -2543,13 +2629,21 @@ namespace kms_slam {
 
         // Setup optimizer
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
+//        g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_6_3::PoseMatrixType>();
+//
+//        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_6_3::PoseMatrixType>();
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> BlockSolverType;
+        typedef g2o::LinearSolverEigen<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::BlockSolver_6_3 *solver_ptr = new g2o::BlockSolver_6_3(linearSolver);
-
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         if (pbStopFlag)
@@ -2814,9 +2908,16 @@ namespace kms_slam {
         // Setup optimizer
         g2o::SparseOptimizer optimizer;
         optimizer.setVerbose(false);
-        g2o::BlockSolver_7_3::LinearSolverType *linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_7_3::PoseMatrixType>();
-        g2o::BlockSolver_7_3 *solver_ptr = new g2o::BlockSolver_7_3(linearSolver);
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+//        g2o::BlockSolver_7_3::LinearSolverType *linearSolver = new g2o::LinearSolverEigen<g2o::BlockSolver_7_3::PoseMatrixType>();
+//        g2o::BlockSolver_7_3 *solver_ptr = new g2o::BlockSolver_7_3(linearSolver);
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverTraits<7, 3>> BlockSolverType;
+        typedef g2o::LinearSolverEigen<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
         solver->setUserLambdaInit(1e-16);
         optimizer.setAlgorithm(solver);
@@ -3073,13 +3174,22 @@ namespace kms_slam {
     int Optimizer::OptimizeSim3(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint *> &vpMatches1, g2o::Sim3 &g2oS12,
                                 const float th2, const bool bFixScale) {
         g2o::SparseOptimizer optimizer;
-        g2o::BlockSolverX::LinearSolverType *linearSolver;
 
-        linearSolver = new g2o::LinearSolverDense<g2o::BlockSolverX::PoseMatrixType>();
+//        g2o::BlockSolverX::LinearSolverType *linearSolver;
+//
+//        linearSolver = new g2o::LinearSolverDense<g2o::BlockSolverX::PoseMatrixType>();
+//
+//        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+//
+//        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
-        g2o::BlockSolverX *solver_ptr = new g2o::BlockSolverX(linearSolver);
+        // G2O new version
+        typedef g2o::BlockSolver<g2o::BlockSolverX> BlockSolverType;
+        typedef g2o::LinearSolverDense<BlockSolverType::PoseMatrixType> LinearSolverType;
+        // use LM
+        auto solver = new g2o::OptimizationAlgorithmLevenberg(
+                g2o::make_unique<BlockSolverType>(g2o::make_unique<LinearSolverType>()));
 
-        g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
         optimizer.setAlgorithm(solver);
 
         // Calibration

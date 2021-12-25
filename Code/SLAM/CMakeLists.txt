@@ -7,17 +7,20 @@ ENDIF ()
 
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 ")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3 ")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall -O3 -march=native")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native")
 
-# Check C++14 or C++0x support
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native")
+
+# Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
 if (COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-    add_definitions(-DCOMPILEDWITHC14)
-    message(STATUS "Using flag -std=c++14.")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    add_definitions(-DCOMPILEDWITHC11)
+    message(STATUS "Using flag -std=c++11.")
 elseif (COMPILER_SUPPORTS_CXX0X)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
     add_definitions(-DCOMPILEDWITHC0X)
@@ -32,6 +35,12 @@ find_package(OpenCV REQUIRED)
 find_package(Eigen3 3.1.0 REQUIRED NO_MODULE)
 find_package(Pangolin REQUIRED)
 find_package(Cholmod REQUIRED)
+
+# G2O
+find_package(G2O REQUIRED)
+#include_directories(${G2O_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES("/usr/local/include/")
+LINK_directories("/usr/local/lib")
 
 include_directories(
         ${PROJECT_SOURCE_DIR}
@@ -74,8 +83,18 @@ target_link_libraries(${PROJECT_NAME}
         ${OpenCV_LIBS}
         ${EIGEN3_LIBS}
         ${Pangolin_LIBRARIES}
-        ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
-        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+        ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_core.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_stuff.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_sba.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_solver_csparse.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_csparse_extension.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_solver_dense.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_solver_eigen.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_sim3.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_slam3d.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/g2o_lib/lib/libg2o_types_slam2d.so
+        ${PROJECT_SOURCE_DIR}/thirdparty/fast/build/libfast.so
         cholmod
         ${CHOLMOD_LIBRARIES}
         ${BLAS_LIBRARIES}

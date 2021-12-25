@@ -13,7 +13,7 @@
 
 #include "common/Configparam.h"
 
-#include "g2o/types/types_seven_dof_expmap.h"
+#include "g2o/types/sim3/types_seven_dof_expmap.h"
 
 #include <thread>
 #include <mutex>

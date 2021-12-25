@@ -2,7 +2,7 @@
 #ifndef INITIALIZER_H
 #define INITIALIZER_H
 
-#include<opencv2/opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include "geometry/Frame.h"
 
 

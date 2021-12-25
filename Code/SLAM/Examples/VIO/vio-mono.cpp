@@ -172,8 +172,10 @@ int main(int argc, char **argv)
     // 3dm imu output per g. 1g=9.80665 according to datasheet
     const double g3dm = 9.80665;
     const bool bAccMultiply98 = config.GetAccMultiply9p8();
-    cout<<"-----------------------------------------------------------------------------"<<endl;
+    cout << "-----------------------------------------------------------------------------" << endl;
+
     char *fullPath = new char[500];// = {0};
+    
     memset(fullPath, 0, 500);
 
     std::vector<kms_slam::IMUData> allimuData;
@@ -252,7 +254,7 @@ int main(int argc, char **argv)
 
         string temp = iListData[j + 1].imgName.substr(0, iListData[j].imgName.size() - 1);
 
-        sprintf(fullPath, "%s/%s", "/home/jun/Github/Data/MH_01_easy/mav0/cam0/data.csv", temp.c_str());
+        sprintf(fullPath, "%s/%s", "/home/jun/Github/Data/MH_01_easy/mav0/cam0/data", temp.c_str());
         cv::Mat im = cv::imread(fullPath, 0);
 
         // cout << fullPath << endl;

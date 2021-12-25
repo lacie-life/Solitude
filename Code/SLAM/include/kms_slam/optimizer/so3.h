@@ -27,7 +27,6 @@
 #include <Eigen/StdVector>
 #include <Eigen/Geometry>
 
-
 namespace Sophus {
     using namespace Eigen;
 
