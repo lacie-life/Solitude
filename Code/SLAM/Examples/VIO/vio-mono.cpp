@@ -147,17 +147,22 @@ void loadIMUFile(char *imuPath, std::vector<kms_slam::IMUData> &vimuData)
 int main(int argc, char **argv)
 {
 
-    if (argc != 7)
-    {
-        cerr << endl << "Not enough param" << endl;
-        cerr << endl << "Usage: ./project path_to_ORBVOC.TXT path_to_euroc.yaml path_to_imu/data.csv path_to_cam0/data.csv path_to_cam0/data  strName" << endl;
-        return 1;
-    }
+//    if (argc != 7)
+//    {
+//        cerr << endl << "Not enough param" << endl;
+//        cerr << endl << "Usage: ./project path_to_ORBVOC.TXT path_to_euroc.yaml path_to_imu/data.csv path_to_cam0/data.csv path_to_cam0/data  strName" << endl;
+//        return 1;
+//    }
 
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    kms_slam::System SLAM(argv[1], argv[2], kms_slam::System::MONOCULAR, true);
+    // kms_slam::System SLAM(argv[1], argv[2], kms_slam::System::MONOCULAR, true);
 
-    kms_slam::ConfigParam config(argv[2]);
+    kms_slam::System SLAM("/home/jun/Github/Master-Thesis/Code/SLAM/Vocabulary/ORBvoc.txt",
+                          "/home/jun/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC.yaml",
+                          kms_slam::System::MONOCULAR,
+                          true);
+
+    kms_slam::ConfigParam config("/home/jun/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC.yaml");
 
     /**
      * @brief added data sync
@@ -174,9 +179,9 @@ int main(int argc, char **argv)
     std::vector<kms_slam::IMUData> allimuData;
     std::vector<ICell> iListData;
 
-    loadIMUFile(argv[3], allimuData);
+    loadIMUFile("/home/jun/Github/Data/MH_01_easy/mav0/imu0/data.csv", allimuData);
 
-    loadImageList(argv[4], iListData);
+    loadImageList("/home/jun/Github/Data/MH_01_easy/mav0/cam0/data.csv", iListData);
 
     //double e = pow(10.0,-9);
 
@@ -247,7 +252,7 @@ int main(int argc, char **argv)
 
         string temp = iListData[j + 1].imgName.substr(0, iListData[j].imgName.size() - 1);
 
-        sprintf(fullPath, "%s/%s", argv[5], temp.c_str());
+        sprintf(fullPath, "%s/%s", "/home/jun/Github/Data/MH_01_easy/mav0/cam0/data.csv", temp.c_str());
         cv::Mat im = cv::imread(fullPath, 0);
 
         // cout << fullPath << endl;
@@ -296,7 +301,7 @@ int main(int argc, char **argv)
         //  break;
     }
     delete [] fullPath;
-    SLAM.SaveKeyFrameTrajectoryNavState(config._tmpFilePath +argv[6]+ "_norosMonoVio.txt");
+    SLAM.SaveKeyFrameTrajectoryNavState(config._tmpFilePath +"vio-mono"+ "_norosMonoVio.txt");
     // Tracking time statistics
     sort(vTimesTrack.begin(), vTimesTrack.end());
     float totaltime = 0;

@@ -5,6 +5,7 @@
 #include <string>
 #include <thread>
 #include <opencv2/core/core.hpp>
+#include <Eigen/Core>
 
 #include "system/Tracking.h"
 #include "system/LocalMapping.h"
@@ -37,6 +38,8 @@ namespace kms_slam {
 
     class System {
     public:
+
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
         bool bLocalMapAcceptKF(void);
 
         void SaveKeyFrameTrajectoryNavState(const string &filename);
