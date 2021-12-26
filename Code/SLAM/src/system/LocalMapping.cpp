@@ -103,6 +103,8 @@ namespace kms_slam {
         // Try to compute initial gyro bias, using optimization with Gauss-Newton
         Vector3d bgest = Optimizer::OptimizeInitialGyroBias(vScaleGravityKF);
 
+        cout << "Bgest: " << endl << bgest << endl;
+
         // Update biasg and pre-integration in LocalWindow. Remember to reset back to zero
         for (vector<KeyFrame *>::const_iterator vit = vScaleGravityKF.begin(), vend = vScaleGravityKF.end();
              vit != vend; vit++) {
@@ -162,8 +164,11 @@ namespace kms_slam {
             // Tested the formulation in paper, -gamma. Then the scale and gravity vector is -xx
 
             // Debug log
-            //cout<<"iter "<<i<<endl;
+            cout << "iter " << i << endl;
         }
+        // Debuug
+        cout << "A:" << endl << A << endl;
+
         // Use svd to compute A*x=B, x=[s,gw] 4x1 vector
         // A = u*w*vt, u*w*vt*x=B
         // Then x = vt'*winv*u'*B
@@ -172,9 +177,9 @@ namespace kms_slam {
         // A is changed in SVDecomp() with cv::SVD::MODIFY_A for speed
         cv::SVDecomp(A, w, u, vt, cv::SVD::MODIFY_A);
         // Debug log
-        //cout<<"u:"<<endl<<u<<endl;
-        //cout<<"vt:"<<endl<<vt<<endl;
-        //cout<<"w:"<<endl<<w<<endl;
+        cout << "u:" << endl << u << endl;
+        cout << "vt:" << endl << vt << endl;
+        cout << "w:" << endl << w << endl;
 
         // Compute winv
         cv::Mat winv = cv::Mat::eye(4, 4, CV_32F);
