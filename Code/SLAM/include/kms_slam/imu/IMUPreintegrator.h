@@ -3,8 +3,8 @@
 
 #include <Eigen/Dense>
 
-#include "common/IMUdata.h"
-#include "optimizer/so3.h"
+#include "imu/IMUdata.h"
+#include "imu/so3.h"
 
 namespace kms_slam {
 

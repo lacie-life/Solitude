@@ -1,4 +1,4 @@
-#include "geometry/NavState.h"
+#include "imu/NavState.h"
 
 namespace kms_slam {
 

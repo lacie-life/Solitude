@@ -1,4 +1,4 @@
-#include "common/IMUdata.h"
+#include "imu/IMUdata.h"
 
 
 namespace kms_slam {

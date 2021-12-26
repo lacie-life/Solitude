@@ -15,7 +15,7 @@
 #include <mutex>
 
 #include "common/Configparam.h"
-#include "common/g2otypes.h"
+#include "imu/g2otypes.h"
 #include "g2o/core/optimization_algorithm_gauss_newton.h"
 #include "g2o/core/optimization_algorithm_with_hessian.h"
 #include "g2o/solvers/cholmod/linear_solver_cholmod.h"

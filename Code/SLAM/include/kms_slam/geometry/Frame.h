@@ -13,9 +13,9 @@
 #include "geometry/MapPoint.h"
 #include "geometry/KeyFrame.h"
 
-#include "common/IMUdata.h"
-#include "geometry/NavState.h"
-#include "optimizer/IMUPreintegrator.h"
+#include "imu/IMUdata.h"
+#include "imu/NavState.h"
+#include "imu/IMUPreintegrator.h"
 
 namespace kms_slam {
 #define FRAME_GRID_ROWS 48

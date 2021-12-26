@@ -5,7 +5,6 @@
 #include <opencv2/opencv.hpp>
 #include "geometry/Frame.h"
 
-
 namespace kms_slam {
 
     // THIS IS THE INITIALIZER FOR MONOCULAR SLAM. NOT USED IN THE STEREO OR RGBD CASE.

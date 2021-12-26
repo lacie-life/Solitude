@@ -22,7 +22,7 @@
 #include "feature/ORBVocabulary.h"
 #include "feature/ORBextractor.h"
 
-#include "common/IMUdata.h"
+#include "imu/IMUdata.h"
 #include "common/Configparam.h"
 
 #include <mutex>

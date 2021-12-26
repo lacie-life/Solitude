@@ -9,7 +9,7 @@
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
 
-#include "common/IMUdata.h"
+#include "imu/IMUdata.h"
 #include "common/Configparam.h"
 #include "system/System.h"
 

@@ -1,4 +1,4 @@
-#include "optimizer/IMUPreintegrator.h"
+#include "imu/IMUPreintegrator.h"
 
 namespace kms_slam {
 

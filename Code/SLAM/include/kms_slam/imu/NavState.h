@@ -1,8 +1,8 @@
 #ifndef NAVSTATE_H
 #define NAVSTATE_H
 
-#include "Eigen/Geometry"
-#include "optimizer/so3.h"
+#include <Eigen/Geometry>
+#include "imu/so3.h"
 
 namespace kms_slam {
 

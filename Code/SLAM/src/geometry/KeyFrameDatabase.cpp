@@ -1,6 +1,5 @@
 
 #include "geometry/KeyFrameDatabase.h"
-
 #include "geometry/KeyFrame.h"
 #include "DBoW2/BowVector.h"
 

@@ -3,9 +3,9 @@
 
 #include "g2o/core/base_vertex.h"
 #include "g2o/core/base_unary_edge.h"
-#include "optimizer/so3.h"
-#include "geometry/NavState.h"
-#include "optimizer/IMUPreintegrator.h"
+#include "imu/so3.h"
+#include "imu/NavState.h"
+#include "imu/IMUPreintegrator.h"
 
 #include "g2o/core/base_multi_edge.h"
 #include "g2o/core/base_binary_edge.h"

@@ -12,9 +12,9 @@
 #include "feature/ORBVocabulary.h"
 #include "feature/ORBextractor.h"
 
-#include "common/IMUdata.h"
-#include "geometry/NavState.h"
-#include "optimizer/IMUPreintegrator.h"
+#include "imu/IMUdata.h"
+#include "imu/NavState.h"
+#include "imu/IMUPreintegrator.h"
 
 #include <mutex>
 
