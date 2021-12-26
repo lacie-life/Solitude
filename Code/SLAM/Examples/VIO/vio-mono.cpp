@@ -157,12 +157,12 @@ int main(int argc, char **argv)
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
     // kms_slam::System SLAM(argv[1], argv[2], kms_slam::System::MONOCULAR, true);
 
-    kms_slam::System SLAM("/home/jun/Github/Master-Thesis/Code/SLAM/Vocabulary/ORBvoc.txt",
-                          "/home/jun/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC-mono.yaml",
+    kms_slam::System SLAM("/home/lacie/Github/Master-Thesis/Code/SLAM/Vocabulary/ORBvoc.txt",
+                          "/home/lacie/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC-mono.yaml",
                           kms_slam::System::MONOCULAR,
                           true);
 
-    kms_slam::ConfigParam config("/home/jun/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC-mono.yaml");
+    kms_slam::ConfigParam config("/home/lacie/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC-mono.yaml");
 
     /**
      * @brief added data sync
@@ -181,9 +181,9 @@ int main(int argc, char **argv)
     std::vector<kms_slam::IMUData> allimuData;
     std::vector<ICell> iListData;
 
-    loadIMUFile("/home/jun/Github/Data/MH_01_easy/mav0/imu0/data.csv", allimuData);
+    loadIMUFile("/home/lacie/Data/MH_01_easy/mav0/imu0/data.csv", allimuData);
 
-    loadImageList("/home/jun/Github/Data/MH_01_easy/mav0/cam0/data.csv", iListData);
+    loadImageList("/home/lacie/Data/MH_01_easy/mav0/cam0/data.csv", iListData);
 
     //double e = pow(10.0,-9);
 
@@ -254,7 +254,7 @@ int main(int argc, char **argv)
 
         string temp = iListData[j + 1].imgName.substr(0, iListData[j].imgName.size() - 1);
 
-        sprintf(fullPath, "%s/%s", "/home/jun/Github/Data/MH_01_easy/mav0/cam0/data", temp.c_str());
+        sprintf(fullPath, "%s/%s", "/home/lacie/Data/MH_01_easy/mav0/cam0/data", temp.c_str());
         cv::Mat im = cv::imread(fullPath, 0);
 
         // cout << fullPath << endl;
