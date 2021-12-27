@@ -73,4 +73,6 @@ namespace kms_slam {
                      const double &ax, const double &ay, const double &az,
                      const double &t) : gyroscope_(gx,gy,gz), accelerometer_(ax,ay,az), timestamp_(t) {}
 
+    KMS_IMUData::KMS_IMUData(const double time, const gtsam::Vector3 accel, const gtsam::Vector3 gyro) : gyroscope_(gyro), accelerometer_(accel), timestamp_(time) {}
+
 } // namespace kms_slam

@@ -8,6 +8,11 @@ file(GLOB COMMON_SOURCES common/*.cpp)
 add_library(kms_common SHARED ${COMMON_SOURCES})
 target_link_libraries(kms_common kms_imu ${THIRD_PARTY_LIBS})
 
+# KMS_GTSAM
+file(GLOB GTSAM_SOURCES gtsam/*.cpp)
+add_library(kms_gtsam SHARED ${GTSAM_SOURCES})
+target_link_libraries(kms_gtsam ${THIRD_PARTY_LIBS})
+
 # KMS_CORE
 file(GLOB CORE_SOURCES   
                 feature/*.cpp

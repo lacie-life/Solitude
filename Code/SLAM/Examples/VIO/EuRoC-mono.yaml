@@ -4,7 +4,7 @@
 # Camera Parameters. Adjust them!
 #--------------------------------------------------------------------------------------------
 
-test.InitVIOTmpPath: "/home/jun/Github/Master-Thesis/Code/SLAM/tmp"
+test.InitVIOTmpPath: "/home/lacie/Github/Master-Thesis/Code/SLAM/tmp"
 
 test.DiscardTime: 0
 

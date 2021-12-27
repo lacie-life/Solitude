@@ -143,20 +143,12 @@ void loadIMUFile(char * imuPath, std::vector<kms_slam::IMUData> &vimuData)
 int main(int argc, char **argv)
 {
 
-
-//    if (argc != 8)
-//    {
-//        cerr << endl << "Usage: ./project path_to_ORBVOC.TXT path_to_euroc.yaml path_to_imu/data.csv path_to_cam0/data.csv path_to_cam0/data path_to_cam1/data strName" << endl;
-//        return 1;
-//    }
-
-    // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    kms_slam::System SLAM("/home/jun/Github/Master-Thesis/Code/SLAM/Vocabulary/ORBvoc.txt",
-                          "/home/jun/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC.yaml",
+    kms_slam::System SLAM("/home/lacie/Github/Master-Thesis/Code/SLAM/Vocabulary/ORBvoc.txt",
+                          "/home/lacie/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC.yaml",
                           kms_slam::System::STEREO,
                           true);
 
-    kms_slam::StereoConfigParam config("/home/jun/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC.yaml");
+    kms_slam::StereoConfigParam config("/home/lacie/Github/Master-Thesis/Code/SLAM/Examples/VIO/EuRoC.yaml");
 
     /**
      * @brief added data sync
@@ -166,25 +158,19 @@ int main(int argc, char **argv)
     // 3dm imu output per g. 1g=9.80665 according to datasheet
     const double g3dm = 9.80665;
     const bool bAccMultiply98 = config.GetAccMultiply9p8();
-    //cout<<"-----------------------------------------------------------------------------"<<endl;
+
     char *fullPath = new char[500];// = {0};
     char *fullPathR = new char[500];// = {0};
     memset(fullPath, 0, 500);
     memset(fullPath, 0, 500);
 
-    //imgData>>imageTimeStamp>>imageName;
-    //imuDataFile>>imuTimeStamp>>grad[0]>>grad[1]>>grad[2]>>acc[0]>>acc[1]>>acc[2];
     std::vector<kms_slam::IMUData> allimuData;
     std::vector<ICell> iListData;
-    //loadIMUFile("/home/fyj/Code/C++/LearnVIORB/Examples/ROS/ORB_VIO/v2_03_diff/V2_03_difficult/mav0/imu0/data.csv",allimuData);
-    loadIMUFile("/home/jun/Github/Data/MH_01_easy/mav0/imu0/data.csv", allimuData);
-    //cout<<"loading imu finished"<<endl;
-    //loadImageList("/home/fyj/Code/C++/LearnVIORB/Examples/ROS/ORB_VIO/v2_03_diff/V2_03_difficult/mav0/cam0/data.csv",iListData);
 
-    loadImageList("/home/jun/Github/Data/MH_01_easy/mav0/cam0/data.csv", iListData);
+    loadIMUFile("/home/lacie/Data/MH_01_easy/mav0/imu0/data.csv", allimuData);
 
-    //cout<<iListData.size()<<"------------"<<allimuData.size()<<endl;
-    //cv::waitKey(0);
+    loadImageList("/home/lacie/Data/MH_01_easy/mav0/cam0/data.csv", iListData);
+
 
     double ImgFirstTime = iListData[0].timeStamp;
     for (int j = 0; j < allimuData.size() - 1; j++)
@@ -244,12 +230,11 @@ int main(int argc, char **argv)
             vimuData.push_back(imudata);
         }
 
-        //cout<<"IMU FINISHED READING"<<endl;
 
         string temp = iListData[j + 1].imgName.substr(0, iListData[j].imgName.size() - 1);
 
-        sprintf(fullPath, "%s/%s", "/home/jun/Github/Data/MH_01_easy/mav0/cam0/data", temp.c_str());
-        sprintf(fullPathR, "%s/%s", "/home/jun/Github/Data/MH_01_easy/mav0/cam1/data", temp.c_str());
+        sprintf(fullPath, "%s/%s", "/home/lacie/Data/MH_01_easy/mav0/cam0/data", temp.c_str());
+        sprintf(fullPathR, "%s/%s", "/home/lacie/Data/MH_01_easy/mav0/cam1/data", temp.c_str());
         im = cv::imread(fullPath, 0);
         imR = cv::imread(fullPathR, 0);
 
@@ -295,8 +280,7 @@ int main(int argc, char **argv)
         {
             bstop = true;
         };
-        //if(bstop)
-        //  break;
+
     }
     delete [] fullPath;
     delete [] fullPathR;

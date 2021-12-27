@@ -35,6 +35,7 @@ find_package(OpenCV REQUIRED)
 find_package(Eigen3 3.1.0 REQUIRED NO_MODULE)
 find_package(Pangolin REQUIRED)
 find_package(Cholmod REQUIRED)
+find_package(GTSAM REQUIRED)
 
 # G2O
 find_package(G2O REQUIRED)
@@ -55,12 +56,11 @@ include_directories(
         ${Pangolin_INCLUDE_DIRS}
         ${CHOLMOD_INCLUDE_DIR}
         ${OpenCV_INCLUDE_DIRS}
+        ${GTSAM_INCLUDE_DIR}
         ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2
-        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o
-)
+        ${PROJECT_SOURCE_DIR}/Thirdparty/g2o)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
-
 
 set (THIRD_PARTY_LIBS
         ${OpenCV_LIBS}
@@ -81,7 +81,8 @@ set (THIRD_PARTY_LIBS
         ${CHOLMOD_LIBRARIES}
         ${BLAS_LIBRARIES}
         ${LAPACK_LIBRARIES}
-        GLEW::GLEW)
+        GLEW::GLEW
+        gtsam)
 
 add_subdirectory(src)
 add_subdirectory(Examples/VIO)

@@ -1,5 +1,27 @@
 %YAML:1.0
 
+
+test.InitVIOTmpPath: "/home/lacie/Github/Master-Thesis/Code/SLAM/tmp"
+
+## For good initialization (no movement at the beginning for some bag)
+test.DiscardTime: 0
+
+# Timestamp shift. Timage = Timu + image_delay
+Camera.delaytoimu: 0
+
+# acc=acc*9.8, if below is 1
+IMU.multiplyG: 0
+
+# camera-imu frame transformation, Pi = Tic * Pc
+Camera.Tbc:
+ [0.0148655429818, -0.999880929698, 0.00414029679422, -0.0216401454975,
+  0.999557249008, 0.0149672133247, 0.025715529948, -0.064676986768,
+  -0.0257744366974, 0.00375618835797, 0.999660727178, 0.00981073058949,
+  0.0, 0.0, 0.0, 1.0]
+
+# Local Window size
+LocalMapping.LocalWindowSize: 10
+
 #--------------------------------------------------------------------------------------------
 # Camera Parameters. Adjust them!
 #--------------------------------------------------------------------------------------------
@@ -113,4 +135,6 @@ Viewer.ViewpointX: 0
 Viewer.ViewpointY: -0.7
 Viewer.ViewpointZ: -1.8
 Viewer.ViewpointF: 500
+
+
 

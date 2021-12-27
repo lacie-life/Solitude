@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <Eigen/Core>
+#include <gtsam/base/Matrix.h>
 
 /**
 * IMU model https://github.com/ethz-asl/kalibr/wiki/IMU-Noise-Model
@@ -67,6 +68,8 @@ namespace kms_slam {
         KMS_IMUData(const double &gx, const double &gy, const double &gz,
                     const double &ax, const double &ay, const double &az,
                     const double &t);
+
+        KMS_IMUData(const double time, const gtsam::Vector3 accel, const gtsam::Vector3 gyro);
 
         //IMU raw data
         Eigen::Vector3d gyroscope_;
