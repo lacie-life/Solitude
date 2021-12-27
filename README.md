@@ -13,7 +13,8 @@
 - [ ] Build a Stereo VIO SLAM based on ORB_SLAM2 => kms_slam
     - [x] Run VIO ORB_SLAM2
     - [x] Modify IMU preintegration of VIO ORB_SLAM2 (based on [Paper](https://arxiv.org/abs/1512.02363))
-    - [ ] Test in ErUoC Dataset
+    - [x] Test in ErUoC Dataset
+    - [ ] Test IMU preintegration of VIO ORB_SLAM2 using GTSAM
 - [ ] Add Fast feature and KTL tracking to kms_slam
     - [ ] Faster than FAST [Paper](http://rpg.ifi.uzh.ch/docs/IROS20_Nagy.pdf) 
 - [ ] Using factor graph in globally bundle adjusted map
