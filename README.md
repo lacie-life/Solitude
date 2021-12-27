@@ -3,10 +3,10 @@
 ## SLAM TODO
 
 - [ ] Review VIO based 
-    - [ ] IMU preintegration
+    - [x] IMU preintegration
     - [ ] GTSAM fusion
     - [ ] rpg_svo_pro_open framework
-    - [ ] FAST feature in CUDA
+    - [x] FAST feature in CUDA
     - [x] ORB_SLAM2 [Source code](https://github.com/raulmur/ORB_SLAM2)
 - [ ] Review Data Accociation Method
     - [ ] QuadricFeature
