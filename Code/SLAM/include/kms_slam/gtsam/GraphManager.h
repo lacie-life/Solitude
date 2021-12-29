@@ -6,6 +6,9 @@
 #define KMS_SLAM_GRAPHMANAGER_H
 
 #include "gtsam/IMUManager.h"
+#include "gtsam/SmartFactors.h"
+#include "common/Types.h"
+#include "common/Transformation.h"
 
 #include <gtsam/base/Matrix.h>
 #include <gtsam/inference/Key.h>
@@ -13,105 +16,102 @@
 #include <gtsam/nonlinear/ISAM2.h>
 #include <gtsam/geometry/Pose3.h>
 #include <gtsam/navigation/CombinedImuFactor.h>
+#include <gtsam/geometry/Cal3_S2.h>
 
 #include <mutex>
 #include <atomic>
 #include <tuple>
 #include <map>
+#include <memory>
+#include <thread>
+#include <vector>
+#include <unordered_map>
+#include <fstream>
 
 using namespace gtsam;
 
 namespace kms_slam
 {
+    struct ImuCalibration;
+    struct ImuInitialization;
+    struct ImuMeasurement;
+    typedef std::deque<ImuMeasurement, Eigen::aligned_allocator<ImuMeasurement>>
+            ImuMeasurements;
+    class Point;
+    class Frame;
+    using GTSAMSlotIndices = gtsam::FastVector<size_t>;
+
+    struct GraphManagerOption
+    {
+        // noise of visual measurements in pixel
+        double reproj_error_ns_px = 1.0;
+        double smart_reproj_outlier_thresh_px = 3.0;
+        bool use_robust_px_noise = true;
+
+        // this avoids chierality check
+        bool use_bearing_factor = true;
+
+        // prior for visual-inertial case
+        double init_pos_sigma_meter = 0.001;
+        double init_roll_pitch_sigma_rad = 45.0 / 180.0 * M_PI;
+        double init_yaw_sigma_rad = 1.0 / 180.0 * M_PI;
+
+        // default general pose prior
+        double position_prior_sigma_meter = 0.001;
+        double rotation_prior_sigma_rad = 1.0 / 180 * M_PI;
+        double point_prior_sigma_meter = 0.001;
+    };
+
+    struct SmartFactorStatistics
+    {
+        size_t n_valid = 0;
+        size_t n_degenerate = 0;
+        size_t n_behind_cam = 0;
+        size_t n_outlier = 0;
+        size_t n_farpoint = 0;
+        void print() const;
+    };
+
     class GraphManager
     {
-    public:
-        using GraphType = NonlinearFactorGraph;
-        using OptimizationCallback = std::function<void(double, Pose3&, Vector3&, imuBias::ConstantBias&)>;
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-        GraphManager(std::shared_ptr<IMUManager> imuManager);
+        using NFramesId = int;
+        using PointId = int;
+        using Ptr = std::shared_ptr<GraphManager>;
+        using PreintegratedImuMeasurements = gtsam::PreintegratedCombinedMeasurements;
+        using CombinedPreintegratedMeasurementPtr =
+        std::shared_ptr<PreintegratedImuMeasurements>;
+        using PointIdSmartFactorMap =
+        std::unordered_map<int, boost::shared_ptr<SmartFactor>>;
+        using IdToFactorIdxMap = std::map<int, std::vector<size_t>>;
+        using IdToSlotIdMap = std::map<int, std::vector<int>>;
 
-        boost::shared_ptr<const GraphType> graph();
+        GraphManager(const GraphManagerOption& options);
+        ~GraphManager();
 
-        /**
-         * Reserves a node in the pose graph at a certain time.
-         *
-         * A sensor manager should call this function when a sensor measurement is first received. After some time,
-         * when the odometry estimate becomes available, that same manager should then call GraphManager::addFactor.
-         *
-         * Thread-safe.
-         *
-         * @param time time, in seconds, at which the sensor measurement was taken.
-         * @return The index at which this node was reserved. To convert to a key, use
-         *      one of gtsam::symbol_shorthand::{X, V, B}.
-         */
-        uint64_t reserveNode(double time);
+        GraphManagerOption options_;
+        gtsam::Cal3_S2::shared_ptr cam_calib;
+        boost::shared_ptr<PreintegratedImuMeasurements::Params> preintegration_params_;
+        std::vector<gtsam::SharedNoiseModel> uplane_noise_pyr_;
+        gtsam::SharedNoiseModel smart_noise_;
+        gtsam::SharedNoiseModel imu_bias_prior_noise_;
+        gtsam::SharedNoiseModel velocity_prior_noise_;
+        gtsam::SharedNoiseModel zero_velocity_prior_noise_;
+        gtsam::SharedNoiseModel point_match_noise_;
+        Eigen::Matrix<double, 6, 6> init_pose_prior_visual_inertial_;
+        std::unique_ptr<gtsam::SmartProjectionParams> smart_factor_params_;
 
-        /**
-         * Returns the most recent pose node reserved by GraphManager::reserveNode.
-         *
-         * @return Tuple of (time, key):
-         *      - time is in Seconds
-         *      - key is just a raw index. To convert to the appropriate Key for the graph,
-         *        use one of gtsam::symbol_shorthand::{X, V, B}.
-         */
-        std::tuple<double, uint64_t> getMostRecentPoseTime();
+        // Mutex protected
+        std::mutex graph_mut_;
+        gtsam::NonlinearFactorGraph new_factors_; // new factors to be added
+        gtsam::Values new_values_;                // new states to be added
 
-        /**
-         * TODO document this
-         * @return
-         */
-        NavState getMostRecentEstimate();
+        // Smart factors
+        PointIdSmartFactorMap point_id_to_new_smart_factor_map_; // pointId -> {SmartFactorPtr}
+        SmartFactorInforMap point_id_to_smart_factor_infor_map_; // pointId -> {SmartFactorPtr, SlotIndex}
 
-        /**
-         * Adds a between factor, which contains the difference in pose between two points in time.
-         *
-         * A sensor manager should call reserveNode every time a raw sensor measurement is received, and keep track
-         * of the two most recent gtsam::Key it gets from this function. Then, when an odometry estimate is received,
-         * it should call addBetweenFactor with these two most recent Keys.
-         *
-         * @param previousKey The Key received from GraphManager::reserveNode
-         * @param currentKey The Key received from GraphManager::reserveNode for the most recent sensor reading
-         * @param betweenPose The change in pose between the points in time indicated by previousKey and currentKey
-         * @param noiseModel The noise model for this particular pose measurement
-         */
-        void addBetweenFactor(Key previousKey, Key currentKey, const Pose3 &betweenPose, const Pose3 &poseEstimate, const SharedNoiseModel &noiseModel);
-
-        void addFactor(const CombinedImuFactor &factor);
-
-        void solve();
-
-        void addOptimizationCallback(OptimizationCallback callback);
-
-        std::tuple<Pose3, Velocity3, imuBias::ConstantBias> getState();
-
-        imuBias::ConstantBias getBias();
-
-    private:
-        using LockGuard = std::lock_guard<std::mutex>;
-
-        std::shared_ptr<IMUManager> _imuManager;
-
-        std::mutex _graphMutex;
-        std::mutex _stateMutex;
-        boost::shared_ptr<GraphType> _graph;
-        Values _values;
-        uint64_t _currentKey = 0;
-        double _lastPoseTime = -1;
-        NavState _mostRecentEstimate;
-        ISAM2 _isam2;
-
-        std::deque<CombinedImuFactor> _imuQueue;
-
-        struct {
-            Pose3 pose = Pose3(Rot3(1, 0, 0, 0), Point3::Zero());
-            Velocity3 vel = Velocity3::Zero();
-            imuBias::ConstantBias bias = imuBias::ConstantBias(Vector6::Zero());
-        } _currentState;
-
-        std::vector<OptimizationCallback> _callbacks;
-
-        void emptyImuQueue();
+        SmartFactorStatistics smart_factor_stats_;
 
 
     }; // class GraphManager
