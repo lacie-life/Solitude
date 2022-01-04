@@ -114,6 +114,8 @@ namespace kms_slam
         SmartFactorStatistics smart_factor_stats_;
 
 
+
+
     }; // class GraphManager
 }
 
