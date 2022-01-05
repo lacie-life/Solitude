@@ -453,4 +453,3 @@ public:
 } // namespace ov_core
 
 #endif /* CPI_V2_H */
-

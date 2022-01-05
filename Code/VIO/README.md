@@ -1,4 +1,0 @@
-# VIO
-
-Research about MSCKF
-
