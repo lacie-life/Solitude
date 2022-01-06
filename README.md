@@ -1,10 +1,12 @@
-# Master Thesis
+# My Researchs
 
 ## SLAM TODO
 
 - [ ] Review VIO based 
     - [x] IMU preintegration
     - [ ] GTSAM fusion
+        - [ ] Understand factor graphs
+        - [ ] Understach custom factor
     - [ ] rpg_svo_pro_open framework
     - [x] FAST feature in CUDA
     - [x] ORB_SLAM2 [Source code](https://github.com/raulmur/ORB_SLAM2)
@@ -29,5 +31,10 @@
 - [ ] GTSAM Factor Graph
 - [ ] Review 4D Reconstruction
 - [ ] Encode Point Cloud by Quadric feature
+
+## Place Recognition TODO
+
+- [ ] Review Place Recognition
+- [ ] Run example
 
 
