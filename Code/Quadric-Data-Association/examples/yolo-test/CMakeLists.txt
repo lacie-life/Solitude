@@ -1,8 +1,9 @@
-# find gtsam for eigen
-find_package(GTSAM REQUIRED HINTS /home/jun/Github/Master-Thesis/Code/Quadric-Data-Association/gtsam)
 
 # include project headers
 include_directories(BEFORE "${PROJECT_SOURCE_DIR}")
+
+find_package(OpenCV 4 REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(yolo-test main.cpp)
 
@@ -10,4 +11,5 @@ add_executable(yolo-test main.cpp)
 target_link_libraries(yolo-test
         gtsam
         ${CONVENIENCE_LIB_NAME}
-        ${Boost_LIBRARIES})
+        ${OpenCV_LIBS}
+        ${THIRD_PARTY_LIBS})
