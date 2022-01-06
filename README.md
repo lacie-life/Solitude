@@ -24,6 +24,10 @@
     - [ ] iSAM2 [Paper](http://frank.dellaert.com/pub/Kaess12ijrr.pdf)
 - [ ] Run QuadricSLAM (object detect by Yolo) [Paper](https://arxiv.org/abs/1804.04011)
 - [ ] Add Quadric feature to kms_slam mapping
+- [ ] MSCKF in Multicamera 
+    - [ ] Hardware
+    - [ ] open-VINS
+    - [ ] Software
 
 ## 4D Reconstruction TODO
 
