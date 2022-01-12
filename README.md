@@ -39,6 +39,7 @@
 ## Place Recognition TODO
 
 - [ ] Review Place Recognition
+- [ ] Test FastABLE
 - [ ] Run example
 
 
