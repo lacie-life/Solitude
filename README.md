@@ -38,8 +38,8 @@
 
 ## Place Recognition TODO
 
-- [ ] Review Place Recognition
-- [ ] Test FastABLE
-- [ ] Run example
+- [x] Review Place Recognition
+- [x] Test NetVLAD
+- [ ] Loopclosing use NetVLAD
 
 
