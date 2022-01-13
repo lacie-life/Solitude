@@ -1,3 +1,7 @@
 # Place Recognition 
 
-## Pending ...
+## NetVLAD 
+
+## Loopclosing
+
+

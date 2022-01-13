@@ -1,0 +1,11 @@
+/home/lacie/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.6461.46/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/lacie/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.6461.46/bin/ninja/linux/ninja -G Ninja /home/lacie/Github/My-Researches/Code/Quadric-Data-Association
+-- Found Boost: /usr/include (found version "1.65.1")  
+-- Found Boost: /usr/include (found suitable version "1.65.1", minimum required is "1.43") found components: serialization system filesystem thread program_options date_time timer chrono regex atomic 
+-- GTSAM include directory:  /usr/local/lib/cmake/GTSAM/../../../include
+-- Torch library found!
+--     include path: /home/lacie/Github/libtorch/include;/home/lacie/Github/libtorch/include/torch/csrc/api/include
+
+-- GTSAM include directory:  /usr/local/lib/cmake/GTSAM/../../../include
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/lacie/Github/My-Researches/Code/Quadric-Data-Association/cmake-build-debug

@@ -1,0 +1,45 @@
+
+language: cpp
+sudo: required
+dist: trusty
+compiler: gcc
+os: linux
+env:
+  global:
+    - GH_REPO_NAME: calc_test
+    - GH_REPO_REF: https://github.com/nmerrill67/calc_test.git
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      # utils
+      - git
+      - autoconf
+
+      # shared deps
+      - build-essential
+      - cmake
+      - libboost-all-dev
+      - libopencv-dev
+      - libgflags-dev
+
+      # caffe deps
+      #- libpython2.7 # Don't need python for now
+      #- python-numpy
+      #- libboost-python-dev		
+      - libopenblas-dev
+      - libprotobuf-dev
+      - libleveldb-dev 
+      - libsnappy-dev 
+      - libhdf5-serial-dev
+      - protobuf-compiler
+      - liblmdb-dev 
+      - libgoogle-glog-dev
+
+      # calc deps
+      - libeigen3-dev
+script:
+   # build caffe and deep-lcd
+   - ./ci/build.sh
