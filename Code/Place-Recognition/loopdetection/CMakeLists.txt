@@ -18,7 +18,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-set(Torch_DIR /home/lacie/Github/libtorch/share/cmake/Torch)
+set(Torch_DIR /home/jun/Github/libtorch/share/cmake/Torch)
 find_package(Torch PATHS ${Torch_DIR} NO_DEFAULT REQUIRED)
 if (Torch_FOUND)
     message(STATUS "Torch library found!")
