@@ -1,6 +1,0 @@
-[submodule "Test/ORB_SLAM3_Fixed"]
-	path = Test/ORB_SLAM3_Fixed
-	url = https://github.com/shanpenghui/ORB_SLAM3_Fixed.git
-[submodule "Code/kms_slam"]
-	path = Code/kms_slam
-	url = git@github.com:KMS-TEAM/kms_slam.git

@@ -35,11 +35,14 @@
 - [ ] GTSAM Factor Graph
 - [ ] Review 4D Reconstruction
 - [ ] Encode Point Cloud by Quadric feature
+- [ ] Livox Mid-40 test
+- [ ] LOAM test
 
 ## Place Recognition TODO
 
 - [x] Review Place Recognition
 - [x] Test NetVLAD
 - [ ] Loopclosing use NetVLAD
+
 
 

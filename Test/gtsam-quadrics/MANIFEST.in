@@ -1,3 +1,0 @@
-include CMakeLists.txt
-recursive-include gtsam *
-recursive-include gtsam_quadrics *
