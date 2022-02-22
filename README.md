@@ -25,7 +25,7 @@
 - [ ] Run QuadricSLAM (object detect by Yolo) [Paper](https://arxiv.org/abs/1804.04011)
 - [ ] Add Quadric feature to kms_slam mapping
 - [ ] MSCKF in Multicamera 
-    - [ ] Hardware
+    - [x] Hardware
     - [ ] open-VINS
     - [ ] Software
 
@@ -35,8 +35,9 @@
 - [ ] GTSAM Factor Graph
 - [ ] Review 4D Reconstruction
 - [ ] Encode Point Cloud by Quadric feature
-- [ ] Livox Mid-40 test
-- [ ] LOAM test
+- [x] Livox Mid-40 test
+- [x] LOAM test
+- [ ] Run LOAM with Livox Mid-40 in AGX
 
 ## Place Recognition TODO
 
