@@ -45,5 +45,8 @@
 - [x] Test NetVLAD
 - [ ] Loopclosing use NetVLAD
 
+## Dataset
 
+- [Sugar Beets](https://www.ipb.uni-bonn.de/data/sugarbeets2016/)
+- [Rosario](https://www.cifasis-conicet.gov.ar/robot/doku.php)
 
