@@ -28,7 +28,9 @@
     - [x] Hardware
     - [ ] open-VINS
     - [ ] Software
-
+- [ ] Run ORB-SLAM 3 in AGX and RTK
+    - [ ] Device
+    - [ ] Test in outdoor environments
 ## 4D Reconstruction TODO
 
 - [ ] Run QuadricSLAM (object detect by Yolo) [Paper](https://arxiv.org/abs/1804.04011)
