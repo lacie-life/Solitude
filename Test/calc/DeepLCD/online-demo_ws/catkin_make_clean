@@ -1,3 +1,0 @@
-#!/bin/bash
-rm -rf build devel
-catkin_make $1 $2 $3 $4

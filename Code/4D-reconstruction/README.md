@@ -1,3 +1,0 @@
-# 4D Reconstruction
-
-## Pending ...
