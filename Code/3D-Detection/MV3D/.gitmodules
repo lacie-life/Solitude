@@ -1,0 +1,3 @@
+[submodule "external_modules/didi-competition"]
+	path = external_modules/didi-competition
+	url = https://github.com/lancejchen/didi-competition.git
