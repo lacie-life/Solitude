@@ -5,9 +5,6 @@ building blocks of network
 import tensorflow as tf
 import numpy as np
 
-
-
-
 ##  global varaiables ##
 IS_TRAIN_PHASE = tf.placeholder(dtype=tf.bool, name='is_train_phase')
 
@@ -23,7 +20,6 @@ def print_macs_to_file(log=None):
         log.write( 'MAC  param_size  :   name           (op)    params   out    in \n')
         log.write( '----------------------------------------------------------------\n')
 
-
     all =0
     all_param_size=0
     all_mac=0
@@ -34,10 +30,10 @@ def print_macs_to_file(log=None):
             op_name = op.op_def.name
             if op_name =='Conv2D':
 
-                #print(op.name)
-                #print(op.inputs)
-                #print(op.outputs)
-                #print(op.op_def)
+                # print(op.name)
+                # print(op.inputs)
+                # print(op.outputs)
+                # print(op.op_def)
                 # assert(op.inputs[1].name == op.name + '_weight/read:0')
                 # input_shape  = op.inputs[0].get_shape().as_list()
                 # output_shape = op.outputs[0].get_shape().as_list()
@@ -71,10 +67,8 @@ def print_macs_to_file(log=None):
                         log.write('%10.1f  %5.2f  :  %-26s (%s)   %4d  %dx%dx%4d   %-30s %3d, %3d, %4d,   %-30s %3d, %3d, %5d\n'%
                                (mac, param_size , name,'Conv2D', oc,h,w,ic,  output_name, oh, ow, oc, input_name, ih, iw, ic ))
 
-
                 except:
                     print ('error in shape?')
-
 
             if op_name == 'MatMul':
                 #raise Exception('xxx')
@@ -111,7 +105,6 @@ def print_macs_to_file(log=None):
     return all, all_mac, all_param_size
 
 
-
 ## loss and metric ## -------------------------------
 def l2_regulariser(decay):
 
@@ -143,9 +136,7 @@ def l2_regulariser(decay):
     return l2_loss
 
 
-
-## op layers ## -------------------------------
-
+## op layers ## -------------------------------------------------------
 # http://stackoverflow.com/questions/37674306/what-is-the-difference-between-same-and-valid-padding-in-tf-nn-max-pool-of-t
 def conv2d(input, num_kernels=1, kernel_size=(1,1), stride=[1,1,1,1], padding='SAME', has_bias=True, name='conv'):
 
@@ -245,9 +236,6 @@ def linear(input, num_hiddens=1,  has_bias=True, name='linear'):
     return dense
 
 
-
-
-
 #http://warmspringwinds.github.io/tensorflow/tf-slim/2016/11/22/upsampling-and-image-segmentation-with-tensorflow-and-tf-slim/
 #https://github.com/MarvinTeichmann/tensorflow-fcn/blob/master/fcn16_vgg.py
 #http://warmspringwinds.github.io/tensorflow/tf-slim/2016/12/18/image-segmentation-with-tensorflow-using-cnns-and-conditional-random-fields/
@@ -291,10 +279,6 @@ def upsample2d(input, factor = 2, has_bias=True, trainable=True, name='upsample2
         deconv = deconv+b
 
     return deconv
-
-
-
-
 
 
 ## basic blocks ## -------------------------------

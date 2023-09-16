@@ -618,9 +618,6 @@ class Trainer(MV3D):
         return info
 
 
-
-
-
     def log_fusion_net_target(self,rgb, scope_name=''):
         subdir = self.log_subdir
         top_image = self.top_image

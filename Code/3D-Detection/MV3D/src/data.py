@@ -695,9 +695,9 @@ def preproces(mapping, frames_index):
             paths = glob.glob(os.path.join(cfg.RAW_DATA_SETS_DIR, key, '*'))
             if len(paths) == 0:
                 raise ValueError('can not found any file in:{}'.format(os.path.join(cfg.RAW_DATA_SETS_DIR, key, '*')))
-            drivers_des=[os.path.basename(path) for path in paths]
+            drivers_des = [os.path.basename(path) for path in paths]
         else:
-            drivers_des=mapping[key]
+            drivers_des = mapping[key]
         for driver in drivers_des:
             print('date {} and driver {}'.format(key, driver))
             data_in_single_driver(cfg.RAW_DATA_SETS_DIR, key, driver, frames_index)

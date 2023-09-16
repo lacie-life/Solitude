@@ -63,11 +63,6 @@ class Image(RawData):
         return mapping
 
 
-
-
-
-
-
 class Tracklet(RawData):
 
     def __init__(self):

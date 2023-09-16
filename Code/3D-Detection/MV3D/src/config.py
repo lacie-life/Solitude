@@ -35,7 +35,7 @@ __C.OBJ_TYPE = 'car' #'car' 'ped'
 __C.ROOT_DIR = osp.abspath(osp.join(osp.dirname(__file__), '..'))
 
 if __C.DATA_SETS_TYPE=='test':
-    __C.DATA_SETS_DIR = osp.abspath('/home/stu/round12_data_test')
+    __C.DATA_SETS_DIR = osp.abspath('/home/lacie/Data/Kitti/2011_09_26')
 else:
     __C.DATA_SETS_DIR=osp.join(__C.ROOT_DIR, 'data')
 
