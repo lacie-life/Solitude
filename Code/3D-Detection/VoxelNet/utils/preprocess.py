@@ -36,7 +36,7 @@ def process_pointcloud(point_cloud, cls = cfg.DETECT_OBJ):
     shifted_coord = point_cloud[:, :3] + lidar_coord
     # reverse the point cloud coordinate (X, Y, Z) -> (Z, Y, X)
     voxel_index = np.floor(
-        shifted_coord[:, ::-1] / voxel_size).astype(np.int)
+        shifted_coord[:, ::-1] / voxel_size).astype(int)
 
     bound_x = np.logical_and(
         voxel_index[:, 2] >= 0, voxel_index[:, 2] < grid_size[2])

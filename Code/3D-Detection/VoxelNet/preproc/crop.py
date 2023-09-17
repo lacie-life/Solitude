@@ -1,5 +1,6 @@
 import numpy as np
-from scipy.misc import imread
+# from scipy.misc import imread
+from imageio import imread
 
 import pdb
 
@@ -95,9 +96,9 @@ def align_img_and_pc(img_dir, pc_dir, calib_dir):
 if __name__ == '__main__':
 
     # Update the following directories
-    IMG_ROOT = './data/KITTI/image/training/image_2/'
-    PC_ROOT = './data/KITTI/point_cloud/training/velodyne/'
-    CALIB_ROOT = './data/KITTI/calib/training/calib/'
+    IMG_ROOT = '/home/lacie/Data/Kitti/VoxelNet-Data/image/training/image_2/'
+    PC_ROOT = '/home/lacie/Data/Kitti/VoxelNet-Data/point_cloud/training/velodyne/'
+    CALIB_ROOT = '/home/lacie/Data/Kitti/VoxelNet-Data/calib/training/calib/'
 
     for frame in range(0, 7481):
         img_dir = IMG_ROOT + '%06d.png' % frame
